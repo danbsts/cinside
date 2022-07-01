@@ -1,0 +1,33 @@
+version: '3'
+services:
+  api:
+    build:
+      context: api
+    env_file:
+      - oauth/secret.env
+      - api/dev.env
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo:/data/db
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+volumes:
+  mongo:
+  rabbitmq-data:

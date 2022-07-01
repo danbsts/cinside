@@ -1,0 +1,21 @@
+micronaut:
+  application:
+    name: api
+  security:
+    authentication: idtoken
+    oauth2:
+      clients:
+        google:
+          client-id: ${OAUTH_CLIENT_ID:xxx}
+          client-secret: ${OAUTH_CLIENT_SECRET:yyy}
+          openid:
+            issuer: 'https://accounts.google.com'
+    endpoints:
+      logout:
+        get-allowed: true
+    redirect:
+      login-failure: ${WEBSITE}
+netty:
+  default:
+    allocator:
+      max-order: 3
