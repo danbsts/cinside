@@ -10,11 +10,14 @@ micronaut:
           client-secret: ${OAUTH_CLIENT_SECRET:yyy}
           openid:
             issuer: 'https://accounts.google.com'
+      login-uri: "/api/oauth/login{/provider}"
+      callback-uri: "/api/oauth/callback{/provider}"
     endpoints:
       logout:
         get-allowed: true
+        path: "/api/logout"
     redirect:
-      login-failure: ${WEBSITE}
+      login-failure: ${REGISTRATION_PAGE}
 netty:
   default:
     allocator:

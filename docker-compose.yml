@@ -11,6 +11,14 @@ services:
       - 8080:8080
     depends_on:
       - mongo
+  nginx:
+    build: nginx/dev
+    restart: always
+    ports:
+      - 443:443
+      - 80:80
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   mongo:
     image: mongo
     restart: always

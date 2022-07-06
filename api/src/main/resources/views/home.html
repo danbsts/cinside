@@ -11,8 +11,8 @@
 
 <nav>
     <ul>
-        <li th:unless="${security}"><a href="/oauth/login/google">Enter</a></li>
-        <li th:if="${security}"><a href="/logout">Logout</a></li>
+        <li th:unless="${security}"><a href="/api/oauth/login/google">Enter</a></li>
+        <li th:if="${security}"><a href="/api/logout">Logout</a></li>
     </ul>
 </nav>
 </body>

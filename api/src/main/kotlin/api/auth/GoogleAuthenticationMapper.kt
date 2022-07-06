@@ -1,6 +1,6 @@
-package api
+package api.auth
 
-import io.micronaut.security.authentication.AuthenticationFailureReason
+import api.auth.failures.AccountNotRegisteredResponse
 import io.micronaut.security.authentication.AuthenticationResponse
 import io.micronaut.security.oauth2.endpoint.authorization.state.State
 import io.micronaut.security.oauth2.endpoint.token.response.DefaultOpenIdAuthenticationMapper
@@ -31,8 +31,11 @@ class GoogleAuthenticationMapper(private val defaultMapper: DefaultOpenIdAuthent
         LOG.info(openIdClaims?.birthday)
         LOG.info(openIdClaims?.phoneNumber)
         LOG.info(openIdClaims?.audience?.joinToString(","))
-        if (openIdClaims?.email == "dan@cin.ufpe.br") {
-            return AuthenticationResponse.failure(openIdClaims.email)
+        openIdClaims?.email?.let { email ->
+            if (email == "dan@cin.ufpe.br") {
+                LOG.info("Returning bc it's")
+                return AccountNotRegisteredResponse(email)
+            }
         }
         return defaultMapper.createAuthenticationResponse(providerName, tokenResponse, openIdClaims, state)
     }
