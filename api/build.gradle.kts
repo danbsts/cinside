@@ -27,6 +27,10 @@ dependencies {
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
     implementation("io.micronaut.security:micronaut-security-oauth2")
     implementation("io.micronaut.security:micronaut-security-jwt")
+    implementation("io.micronaut.mongodb:micronaut-mongo-sync")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:mongodb")
+    testImplementation("org.testcontainers:testcontainers")
 
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
