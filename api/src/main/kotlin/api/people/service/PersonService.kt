@@ -4,5 +4,7 @@ import api.people.dto.PersonDTO
 
 interface PersonService {
 
-  fun createPerson(personDTO: PersonDTO): String
+  fun register(personDTO: PersonDTO): String
+
+  fun exists(email: String): Boolean
 }

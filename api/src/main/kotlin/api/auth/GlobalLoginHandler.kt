@@ -11,29 +11,34 @@ import io.micronaut.security.errors.PriorToLoginPersistence
 import io.micronaut.security.oauth2.endpoint.token.response.IdTokenLoginHandler
 import io.micronaut.security.token.jwt.cookie.AccessTokenCookieConfiguration
 import jakarta.inject.Singleton
-import org.slf4j.LoggerFactory
 import java.net.URI
 import java.net.URLEncoder
 
 @Singleton
 @Replaces(IdTokenLoginHandler::class)
 class GlobalLoginHandler(
-    accessTokenCookieConfiguration: AccessTokenCookieConfiguration?,
-    redirectConfiguration: RedirectConfiguration?,
-    priorToLoginPersistence: PriorToLoginPersistence?
+  accessTokenCookieConfiguration: AccessTokenCookieConfiguration?,
+  redirectConfiguration: RedirectConfiguration?,
+  priorToLoginPersistence: PriorToLoginPersistence?
 ) : IdTokenLoginHandler(accessTokenCookieConfiguration, redirectConfiguration, priorToLoginPersistence) {
-    private val LOG = LoggerFactory.getLogger(GoogleAuthenticationMapper::class.java)
 
-    override fun loginFailed(
-        authenticationFailed: AuthenticationResponse,
-        request: HttpRequest<*>?
-    ): MutableHttpResponse<*> {
-        if (authenticationFailed is AccountNotRegisteredResponse) {
-            LOG.info("LOGIN FALHOU PARA: ${authenticationFailed.email}")
-            val encodedUrl = URLEncoder.encode(authenticationFailed.email, "UTF-8")
-            val location = URI("$loginFailure?email=$encodedUrl")
-            return HttpResponse.seeOther<Any>(location)
-        }
-        return super.loginFailed(authenticationFailed, request)
+  override fun loginFailed(
+    authenticationFailed: AuthenticationResponse,
+    request: HttpRequest<*>?
+  ): MutableHttpResponse<*> {
+    if (authenticationFailed !is AccountNotRegisteredResponse) {
+      return super.loginFailed(authenticationFailed, request)
     }
+
+    if (authenticationFailed.email == null) {
+      val location = URI(loginFailure ?: "/")
+      return HttpResponse.seeOther<Any>(location)
+    }
+
+    val encodedEmail = URLEncoder.encode(authenticationFailed.email, "UTF-8")
+    val encodedName = authenticationFailed.name?.let { URLEncoder.encode(it, "UTF-8") }
+    val nameQuery = encodedName?.let { "&name=$it" } ?: ""
+    val location = URI("$loginFailure?email=$encodedEmail$nameQuery")
+    return HttpResponse.seeOther<Any>(location)
+  }
 }

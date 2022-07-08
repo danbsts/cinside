@@ -11,7 +11,7 @@ import jakarta.inject.Singleton
 @Singleton
 class PersonServiceImpl(private val personRepository: PersonRepository) : PersonService {
 
-  override fun createPerson(personDTO: PersonDTO): String {
+  override fun register(personDTO: PersonDTO): String {
     if (personDTO.skills == null || personDTO.linkedin == null ||
       personDTO.github == null || personDTO.email == null ||
       personDTO.fullName == null || personDTO.displayName == null
@@ -55,6 +55,10 @@ class PersonServiceImpl(private val personRepository: PersonRepository) : Person
       throw HttpStatusException(HttpStatus.BAD_REQUEST, "Bad LinkedIn: ${personDTO.linkedin}")
     }
     return true
+  }
+
+  override fun exists(email: String): Boolean {
+    return personRepository.emailExists(email)
   }
 
 }

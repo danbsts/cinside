@@ -14,8 +14,8 @@ class PersonController(private val personService: PersonService) {
 
   @Post
   @Secured(SecurityRule.IS_ANONYMOUS)
-  fun createPerson(@Body personDTO: PersonDTO): HttpResponse<PersonDTO> {
-    val personEmail = personService.createPerson(personDTO)
+  fun register(@Body personDTO: PersonDTO): HttpResponse<PersonDTO> {
+    val personEmail = personService.register(personDTO)
     return HttpResponse.created(PersonDTO(email = personEmail))
   }
 }
