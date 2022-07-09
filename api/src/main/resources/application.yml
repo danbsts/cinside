@@ -12,9 +12,6 @@ micronaut:
             issuer: 'https://accounts.google.com'
       login-uri: "/api/oauth/login{/provider}"
       callback-uri: "/api/oauth/callback{/provider}"
-      openid:
-        additional-claims:
-          jwt: true
     endpoints:
       logout:
         get-allowed: true
