@@ -37,7 +37,7 @@ class PersonController(
   fun update(@Body personDTO: PersonDTO): HttpResponse<PersonDTO> {
     val result = personService.update(customAuthentication.getEmail(), personDTO)
     if (result <= 0) {
-      return HttpResponse.accepted()
+      return HttpResponse.notFound()
     }
     return HttpResponse.noContent()
   }

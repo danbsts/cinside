@@ -1,14 +1,18 @@
 package api.projects.service
 
 import api.projects.dto.ProjectDTO
+import io.micronaut.data.model.Page
+import org.bson.types.ObjectId
 
 interface ProjectService {
 
-  fun register(projectDTO: ProjectDTO): String
+  fun register(projectDTO: ProjectDTO): ObjectId?
 
-  fun exists(email: String): Boolean
+  fun find(id: ObjectId): ProjectDTO
 
-  fun find(email: String): ProjectDTO
+  fun findAllPaged(page: Int, filterPrivate: Boolean = false): Page<ProjectDTO>
 
-  fun update(email: String, projectDTO: ProjectDTO): Long
+  fun update(projectDTO: ProjectDTO): Long
+
+  fun delete(id: ObjectId): Long
 }
