@@ -18,7 +18,7 @@ import java.util.function.Consumer
 @Singleton
 @Named("google")
 class GoogleOpenIdAuthenticationMapper(
-  private val personService: PersonRepository,
+  private val personRepository: PersonRepository,
 ) : OpenIdAuthenticationMapper {
 
   override fun createAuthenticationResponse(
@@ -29,13 +29,11 @@ class GoogleOpenIdAuthenticationMapper(
   ): AuthenticationResponse {
     val email = openIdClaims?.email ?: return AccountNotRegisteredResponse()
 
-    val emailExists = personService.emailExists(email)
-    if (!emailExists) {
-      return AccountNotRegisteredResponse(openIdClaims.name, email)
-    }
+    val user = personRepository.findByEmail(email)
+      ?: return AccountNotRegisteredResponse(openIdClaims.name, email)
+    personRepository.updateUsername(email, openIdClaims.subject)
 
-    val user = personService.findByEmail(email)
-    val claims = buildAttributes(providerName, tokenResponse, openIdClaims, user?.id)
+    val claims = buildAttributes(providerName, tokenResponse, openIdClaims, user.id)
     return AuthenticationResponse.success(openIdClaims.subject, Collections.emptyList(), claims)
   }
 

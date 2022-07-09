@@ -14,4 +14,6 @@ interface PersonRepository {
   fun findById(id: ObjectId): Person?
 
   fun update(person: Person): Long
+
+  fun updateUsername(email: String, username: String): Long
 }

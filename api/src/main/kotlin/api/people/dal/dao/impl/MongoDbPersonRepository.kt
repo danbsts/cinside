@@ -6,16 +6,15 @@ import api.people.dal.model.Person
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters
-import com.mongodb.client.result.InsertOneResult
+import com.mongodb.client.model.Updates
 import jakarta.inject.Singleton
-import org.bson.conversions.Bson
 import org.bson.types.ObjectId
 
 @Singleton
 class MongoDbPersonRepository(
   private val mongoConfig: MongoDbConfiguration,
   private val mongoClient: MongoClient
-): PersonRepository {
+) : PersonRepository {
 
   private val collection: MongoCollection<Person>
     get() = mongoClient.getDatabase(mongoConfig.name)
@@ -51,4 +50,12 @@ class MongoDbPersonRepository(
     return result.modifiedCount
   }
 
+  override fun updateUsername(email: String, username: String): Long {
+    val filter = Filters.and(
+      Filters.eq("email", email),
+      Filters.eq("username", null)
+    )
+    val update = Updates.set("username", username)
+    return collection.updateOne(filter, update).modifiedCount
+  }
 }

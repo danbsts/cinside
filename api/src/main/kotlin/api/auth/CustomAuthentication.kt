@@ -37,7 +37,7 @@ class CustomAuthentication(private val securityService: SecurityService) {
 
   fun getUserName(): String {
     return requireAuthenticated().attributes["name"]?.toString()
-      ?: throw HttpStatusException(HttpStatus.BAD_REQUEST, "[CA] Name not found.")
+      ?: throw HttpStatusException(HttpStatus.BAD_REQUEST, "[CA] Username not found.")
   }
 
   fun getProfilePicture(): String? {

@@ -17,5 +17,6 @@ data class Person @Creator @BsonCreator constructor(
   @field:BsonProperty("skills") @param:BsonProperty("skills") var skills: String,
   @field:BsonProperty("_id") @param:BsonProperty("_id") val id: ObjectId? = null,
   @field:BsonProperty("creationDate") @param:BsonProperty("creationDate") val creationDate: LocalDateTime =
-    LocalDateTime.now()
+    LocalDateTime.now(),
+  @field:BsonProperty("username") @param:BsonProperty("username") val username: String? = null,
 )
