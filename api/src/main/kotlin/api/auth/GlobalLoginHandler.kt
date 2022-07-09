@@ -5,12 +5,14 @@ import io.micronaut.context.annotation.Replaces
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MutableHttpResponse
+import io.micronaut.security.authentication.Authentication
 import io.micronaut.security.authentication.AuthenticationResponse
 import io.micronaut.security.config.RedirectConfiguration
 import io.micronaut.security.errors.PriorToLoginPersistence
 import io.micronaut.security.oauth2.endpoint.token.response.IdTokenLoginHandler
 import io.micronaut.security.token.jwt.cookie.AccessTokenCookieConfiguration
 import jakarta.inject.Singleton
+import org.slf4j.LoggerFactory
 import java.net.URI
 import java.net.URLEncoder
 
@@ -21,6 +23,7 @@ class GlobalLoginHandler(
   redirectConfiguration: RedirectConfiguration?,
   priorToLoginPersistence: PriorToLoginPersistence?
 ) : IdTokenLoginHandler(accessTokenCookieConfiguration, redirectConfiguration, priorToLoginPersistence) {
+  val LOG = LoggerFactory.getLogger(GlobalLoginHandler::class.java)
 
   override fun loginFailed(
     authenticationFailed: AuthenticationResponse,
@@ -40,5 +43,10 @@ class GlobalLoginHandler(
     val nameQuery = encodedName?.let { "&name=$it" } ?: ""
     val location = URI("$loginFailure?email=$encodedEmail$nameQuery")
     return HttpResponse.seeOther<Any>(location)
+  }
+
+  override fun loginSuccess(authentication: Authentication?, request: HttpRequest<*>?): MutableHttpResponse<*> {
+    LOG.info(authentication?.attributes.toString())
+    return super.loginSuccess(authentication, request)
   }
 }

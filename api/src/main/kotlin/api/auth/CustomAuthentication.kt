@@ -6,9 +6,11 @@ import io.micronaut.security.authentication.Authentication
 import io.micronaut.security.utils.SecurityService
 import jakarta.inject.Singleton
 import org.bson.types.ObjectId
+import org.slf4j.LoggerFactory
 
 @Singleton
 class CustomAuthentication(private val securityService: SecurityService) {
+  val LOG = LoggerFactory.getLogger(CustomAuthentication::class.java)
 
   private fun requireAuthenticated(): Authentication {
     if (!securityService.isAuthenticated) {
