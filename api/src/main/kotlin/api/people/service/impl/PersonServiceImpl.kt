@@ -16,9 +16,10 @@ class PersonServiceImpl(private val personRepository: PersonRepository) : Person
       personDTO.github == null || personDTO.email == null ||
       personDTO.fullName == null || personDTO.displayName == null
     ) {
-      throw HttpStatusException(HttpStatus.BAD_REQUEST, "Missing information for profile")
+      throw HttpStatusException(HttpStatus.BAD_REQUEST, "Missing profile information")
     }
-    checkRegex(personDTO)
+    emailCheck(personDTO.email)
+    urlsCheck(personDTO)
 
     val personExists = personRepository.emailExists(personDTO.email)
     if (personExists) {
@@ -26,24 +27,26 @@ class PersonServiceImpl(private val personRepository: PersonRepository) : Person
     }
 
     val person = Person(
-      personDTO.fullName,
-      personDTO.displayName,
-      personDTO.email,
-      personDTO.linkedin,
-      personDTO.github,
-      personDTO.skills
+      fullName = personDTO.fullName,
+      displayName = personDTO.displayName,
+      email = personDTO.email,
+      github = personDTO.github,
+      linkedin = personDTO.linkedin,
+      skills = personDTO.skills
     )
     val result = personRepository.save(person)
       ?: throw HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error saving.")
     return result.email
   }
 
-  private fun checkRegex(personDTO: PersonDTO): Boolean {
+  private fun emailCheck(email: String?) {
     val emailRegex = "^((?!\\.)[\\w-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])\$".toRegex()
-    if (personDTO.email == null || !emailRegex.matches(personDTO.email)) {
-      throw HttpStatusException(HttpStatus.BAD_REQUEST, "Bad email: ${personDTO.email}")
+    if (email == null || !emailRegex.matches(email)) {
+      throw HttpStatusException(HttpStatus.BAD_REQUEST, "Bad email: $email")
     }
+  }
 
+  private fun urlsCheck(personDTO: PersonDTO) {
     val githubRegex = "^(http(s?):\\/\\/)?(www\\.)?github\\.([a-z])+\\/([A-Za-z0-9]{1,})+\\/?\$".toRegex()
     if (personDTO.github == null || !githubRegex.matches(personDTO.github)) {
       throw HttpStatusException(HttpStatus.BAD_REQUEST, "Bad Github: ${personDTO.github}")
@@ -54,11 +57,42 @@ class PersonServiceImpl(private val personRepository: PersonRepository) : Person
     if (personDTO.linkedin == null || !linkedinRegex.matches(personDTO.linkedin)) {
       throw HttpStatusException(HttpStatus.BAD_REQUEST, "Bad LinkedIn: ${personDTO.linkedin}")
     }
-    return true
   }
 
   override fun exists(email: String): Boolean {
     return personRepository.emailExists(email)
+  }
+
+  override fun find(email: String): PersonDTO {
+    val person = personRepository.findByEmail(email)
+      ?: throw HttpStatusException(HttpStatus.NOT_FOUND, "User $email not registered")
+
+    return PersonDTO(
+      fullName = person.fullName,
+      displayName = person.displayName,
+      email = person.email,
+      linkedin = person.linkedin,
+      github = person.github,
+      skills = person.skills
+    )
+  }
+
+  override fun update(email: String, personDTO: PersonDTO): Long {
+    urlsCheck(personDTO)
+    if (personDTO.skills == null || personDTO.linkedin == null ||
+      personDTO.github == null || personDTO.displayName == null
+    ) {
+      throw HttpStatusException(HttpStatus.BAD_REQUEST, "Missing profile information")
+    }
+
+    val replaceable = personRepository.findByEmail(email)
+      ?: throw HttpStatusException(HttpStatus.NOT_FOUND, "User $email not registered")
+
+    replaceable.skills = personDTO.skills
+    replaceable.displayName = personDTO.displayName
+    replaceable.github = personDTO.github
+    replaceable.linkedin = personDTO.linkedin
+    return personRepository.update(replaceable)
   }
 
 }

@@ -7,5 +7,8 @@ interface PersonRepository {
   fun save(person: Person): Person?
 
   fun emailExists(email: String): Boolean
+
   fun findByEmail(email: String): Person?
+
+  fun update(person: Person): Long
 }

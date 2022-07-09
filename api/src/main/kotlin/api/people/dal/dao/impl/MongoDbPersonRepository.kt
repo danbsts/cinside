@@ -39,4 +39,10 @@ class MongoDbPersonRepository(
     return result.first()
   }
 
+  override fun update(person: Person): Long {
+    val filter = Filters.eq("email", person.email)
+    val result = collection.replaceOne(filter, person)
+    return result.modifiedCount
+  }
+
 }
