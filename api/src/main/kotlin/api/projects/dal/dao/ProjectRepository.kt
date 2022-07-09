@@ -8,7 +8,7 @@ interface ProjectRepository {
 
   fun save(project: Project): ObjectId?
 
-  fun findByFounderId(userId: ObjectId): List<Project>
+  fun findByFounderUsername(username: String): List<Project>
 
   fun findById(id: ObjectId): Project?
 

@@ -23,21 +23,13 @@ class CustomAuthentication(private val securityService: SecurityService) {
     return securityService.isAuthenticated
   }
 
-  fun getUserID(): ObjectId {
-    return requireAuthenticated().attributes["id"]?.let {
-      ObjectId(it.toString())
-    }
-      ?: throw HttpStatusException(HttpStatus.BAD_REQUEST, "[CA] User ID not found.")
-  }
-
   fun getEmail(): String {
     return requireAuthenticated().attributes["email"]?.toString()
       ?: throw HttpStatusException(HttpStatus.BAD_REQUEST, "[CA] Email not found.")
   }
 
   fun getUserName(): String {
-    return requireAuthenticated().attributes["name"]?.toString()
-      ?: throw HttpStatusException(HttpStatus.BAD_REQUEST, "[CA] Username not found.")
+    return requireAuthenticated().name
   }
 
   fun getProfilePicture(): String? {

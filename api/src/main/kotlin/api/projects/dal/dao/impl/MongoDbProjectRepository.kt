@@ -31,11 +31,11 @@ class MongoDbProjectRepository(
     if (!result.wasAcknowledged()) {
       return null
     }
-    return result.insertedId?.let { ObjectId(it.toString()) }
+    return result.insertedId?.let { it.asObjectId().value }
   }
 
-  override fun findByFounderId(userId: ObjectId): List<Project> {
-    val filter = Filters.eq("founderId", userId)
+  override fun findByFounderUsername(username: String): List<Project> {
+    val filter = Filters.eq("founderUsername", username)
     val result = collection.find(filter)
     return result.toList()
   }

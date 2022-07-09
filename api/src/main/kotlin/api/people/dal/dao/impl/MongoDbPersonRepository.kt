@@ -8,7 +8,6 @@ import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Updates
 import jakarta.inject.Singleton
-import org.bson.types.ObjectId
 
 @Singleton
 class MongoDbPersonRepository(
@@ -39,8 +38,8 @@ class MongoDbPersonRepository(
     return result.first()
   }
 
-  override fun findById(id: ObjectId): Person? {
-    val filter = Filters.eq("_id", id)
+  override fun findByUsername(username: String): Person? {
+    val filter = Filters.eq("username", username)
     return collection.find(filter).first()
   }
 

@@ -27,6 +27,6 @@ netty:
 db:
   name: "cinside"
   personCollection: "person"
-  projectColletion: "project"
+  projectCollection: "project"
 mongodb:
   uri: mongodb://${MONGO_USER:root}:${MONGO_PASSWORD:example}@${MONGO_HOST:mongo}:${MONGO_PORT:27017}

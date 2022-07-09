@@ -1,7 +1,6 @@
 package api.people.dal.dao
 
 import api.people.dal.model.Person
-import org.bson.types.ObjectId
 
 interface PersonRepository {
 
@@ -11,7 +10,7 @@ interface PersonRepository {
 
   fun findByEmail(email: String): Person?
 
-  fun findById(id: ObjectId): Person?
+  fun findByUsername(username: String): Person?
 
   fun update(person: Person): Long
 

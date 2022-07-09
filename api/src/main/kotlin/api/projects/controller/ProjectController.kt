@@ -40,8 +40,9 @@ class ProjectController(
 
   @Get("/{id}")
   @Secured(SecurityRule.IS_AUTHENTICATED)
-  fun find(id: ObjectId): HttpResponse<ProjectDTO> {
-    val result = projectService.find(id)
+  fun find(id: String): HttpResponse<ProjectDTO> {
+    val objectId = ObjectId(id)
+    val result = projectService.find(objectId)
     return HttpResponse.ok(result)
   }
 
@@ -57,8 +58,9 @@ class ProjectController(
 
   @Delete("{id}")
   @Secured(SecurityRule.IS_AUTHENTICATED)
-  fun delete(id: ObjectId): HttpResponse<Any> {
-    val result = projectService.delete(id)
+  fun delete(id: String): HttpResponse<Any> {
+    val objectId = ObjectId(id)
+    val result = projectService.delete(objectId)
     if (result <= 0) {
       return HttpResponse.notFound()
     }
