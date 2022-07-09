@@ -23,7 +23,6 @@ class GlobalLoginHandler(
   redirectConfiguration: RedirectConfiguration?,
   priorToLoginPersistence: PriorToLoginPersistence?
 ) : IdTokenLoginHandler(accessTokenCookieConfiguration, redirectConfiguration, priorToLoginPersistence) {
-  val LOG = LoggerFactory.getLogger(GlobalLoginHandler::class.java)
 
   override fun loginFailed(
     authenticationFailed: AuthenticationResponse,
@@ -43,10 +42,5 @@ class GlobalLoginHandler(
     val nameQuery = encodedName?.let { "&name=$it" } ?: ""
     val location = URI("$loginFailure?email=$encodedEmail$nameQuery")
     return HttpResponse.seeOther<Any>(location)
-  }
-
-  override fun loginSuccess(authentication: Authentication?, request: HttpRequest<*>?): MutableHttpResponse<*> {
-    LOG.info(authentication?.attributes.toString())
-    return super.loginSuccess(authentication, request)
   }
 }

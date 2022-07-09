@@ -12,16 +12,14 @@ import io.micronaut.security.token.jwt.generator.claims.JwtClaims
 import jakarta.inject.Named
 import jakarta.inject.Singleton
 import org.bson.types.ObjectId
-import org.slf4j.LoggerFactory
-import java.util.*
+import java.util.Collections
 import java.util.function.Consumer
 
 @Singleton
 @Named("google")
 class GoogleOpenIdAuthenticationMapper(
-  private val personService: PersonRepository
+  private val personService: PersonRepository,
 ) : OpenIdAuthenticationMapper {
-  val LOG = LoggerFactory.getLogger(GoogleOpenIdAuthenticationMapper::class.java)
 
   override fun createAuthenticationResponse(
     providerName: String?,
@@ -37,9 +35,7 @@ class GoogleOpenIdAuthenticationMapper(
     }
 
     val user = personService.findByEmail(email)
-    LOG.info(user.toString())
     val claims = buildAttributes(providerName, tokenResponse, openIdClaims, user?.id)
-    LOG.info(claims.toString())
     return AuthenticationResponse.success(openIdClaims.subject, Collections.emptyList(), claims)
   }
 
