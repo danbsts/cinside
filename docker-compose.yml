@@ -19,6 +19,18 @@ services:
       - 80:80
     extra_hosts:
       - "host.docker.internal:host-gateway"
+  web-app:
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile
+      context: ./web-app
+    depends_on:
+      - api
+    volumes:
+      - ./web-app/src:/cinside/src
+      - ./web-app/public:/cinside/public
+    ports:
+      - 3000:3000
   mongo:
     image: mongo
     restart: always

@@ -1,6 +1,9 @@
 micronaut:
   application:
     name: api
+  server:
+    cors:
+      enabled: true
   security:
     authentication: idtoken
     oauth2:
@@ -12,14 +15,18 @@ micronaut:
             issuer: 'https://accounts.google.com'
       login-uri: "/api/oauth/login{/provider}"
       callback-uri: "/api/oauth/callback{/provider}"
+      openid:
+        nonce:
+          cookie:
+            cookie-max-age: 1d
     endpoints:
       logout:
         get-allowed: true
         path: "/api/logout"
     redirect:
-      login-failure: "/api?status=FAILED"
-      login-success: "/api"
-      logout: "/api"
+      login-failure: "/sign-up"
+      login-success: "/projects"
+      logout: "/"
 netty:
   default:
     allocator:

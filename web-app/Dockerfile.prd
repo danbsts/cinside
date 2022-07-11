@@ -1,0 +1,12 @@
+FROM node:14.5-alpine as build
+WORKDIR /dikastis
+RUN yarn config set network-timeout 300000
+COPY package.json yarn.lock ./
+COPY patches ./patches
+RUN yarn
+COPY . .
+RUN yarn build
+
+FROM rookiezoe/nginx:1.19.10
+COPY nginx/prd/*.conf /etc/nginx/conf.d/
+COPY --from=build /dikastis/build /dikastis/build

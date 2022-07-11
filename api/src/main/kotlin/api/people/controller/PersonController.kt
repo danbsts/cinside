@@ -11,6 +11,7 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Put
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
+import java.net.URI
 
 @Controller("/api/people")
 class PersonController(
@@ -40,5 +41,14 @@ class PersonController(
       return HttpResponse.notFound()
     }
     return HttpResponse.noContent()
+  }
+
+  @Get("/logged-in")
+  @Secured(SecurityRule.IS_ANONYMOUS)
+  fun checkLogin(): HttpResponse<Any> {
+    if (!customAuthentication.isAuthenticated()) {
+      return HttpResponse.unauthorized()
+    }
+    return HttpResponse.ok()
   }
 }
