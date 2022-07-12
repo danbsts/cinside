@@ -35,28 +35,12 @@ const status = {
   DEPLOYED_MAINTAINING: 'Deployed/Maintaining',
 };
 
-function ProjectsSearchForm({ children }) {
+function ProjectList({
+  values,
+}) {
+  console.log(values);
   return (
-    <Formik
-      initialValues={{
-        status: visibility.ALL,
-        visibility: visibility.ALL,
-      }}
-      validateOnChange={false}
-      onSubmit={(values) => {
-        console.log(values);
-      }}
-    >
-      <Form>
-        {children}
-      </Form>
-    </Formik>
-  );
-}
-
-export default function ProjectListPage() {
-  return (
-    <ProjectsSearchForm>
+    <Form>
       <FlexLayout justifyContent="space-between" style={searchContainerStyle}>
         <FlexLayout style={filterContainerStyle}>
           <DktFormField as="select" name="visibility" placeholder="All" title="Visibility">
@@ -73,6 +57,21 @@ export default function ProjectListPage() {
         <DktButton negative style={addButtonStyle}>Add project</DktButton>
       </FlexLayout>
       <ProjectBox />
-    </ProjectsSearchForm>
+    </Form>
+  );
+}
+
+export default function ProjectListPage() {
+  return (
+    <Formik
+      initialValues={{
+        status: visibility.ALL,
+        visibility: visibility.ALL,
+      }}
+      validateOnBlur={false}
+      validateOnChange={false}
+    >
+      {ProjectList}
+    </Formik>
   );
 }

@@ -11,6 +11,7 @@ import DktRouter from 'router/DktRouter';
 import FlexLayout from 'shared/FlexLayout';
 import Header from 'header/Header';
 import ProjectListPage from 'projects/ProjectListPage';
+import ProjectPage from 'projects/project/ProjectPage';
 
 const pageStyle = css`
   height: 100%;
@@ -23,9 +24,10 @@ function AppLayout() {
   return (
     <FlexLayout alignItems="center" flexDirection="column">
       <Header />
-      <div className={pageStyle} flowDirection="column" justifyContent="center">
+      <div className={pageStyle}>
         <Suspense fallback={<DktLoader />}>
           <DktRouter>
+            <Route component={ProjectPage} path={Path.PROJECTS_PROJECT} />
             <Route component={ProjectListPage} path={Path.PROJECTS} />
           </DktRouter>
         </Suspense>
@@ -40,8 +42,7 @@ export default function AuthenticatedApp() {
       <Route exact path={[Path.SIGN_IN, Path.SIGN_UP]}>
         <Redirect to={Path.ROOT} />
       </Route>
-      <Route component={AppLayout} path="/projects" />
-      <Route exact component={ProjectListPage} path={Path.ROOT} />
+      <Route component={AppLayout} path={Path.ROOT} />
     </DktRouter>
   );
 }

@@ -50,6 +50,7 @@ export const Path = Object.freeze({
   PROBLEMS_PROBLEM_SUBMISSIONS: '/problems/:problemId/submissions',
   PROFILE: '/profile',
   PROJECTS: '/projects',
+  PROJECTS_PROJECT: '/projects/:id',
   ROOT: '/',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
@@ -71,7 +72,14 @@ export const DomainEntryPoint = Object.freeze({
   [Domain.ORGANIZATIONS]: Path.ORGANIZATIONS_HOME,
 });
 
-registerRoute(Domain.PROJECTS, Path.PROJECTS);
+registerGroup(
+  Domain.PROJECTS,
+  [
+    Path.ROOT,
+    Path.PROJECTS,
+    Path.PROJECTS_PROJECT,
+  ],
+);
 
 registerRoute(Domain.HOME, Path.CATEGORIES);
 

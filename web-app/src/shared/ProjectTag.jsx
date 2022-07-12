@@ -17,7 +17,7 @@ const negativeStyle = css`
   color: #1C1C1C;
 `;
 
-export default function ProblemDifficulty({ children, negative, style }) {
+export default function ProjectTag({ children, negative, style }) {
   const composedStyle = cx(
     styleBase,
     { [negativeStyle]: negative },

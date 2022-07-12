@@ -9,6 +9,7 @@ const h1 = css`
 `;
 const h2 = css`
   margin: 0;
+  font-weight: 600;
   font-size: 35px;
   color: #eee;
 `;
