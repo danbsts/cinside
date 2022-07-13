@@ -5,7 +5,7 @@ import { css } from '@emotion/css';
 import DktText from 'shared/DktText';
 
 const containerStyle = css`
-  width: 90%;
+  width: fit-content;
   max-width: 1000px;
   margin: auto;
 `;
@@ -26,7 +26,7 @@ function ProfileField({ title, value }) {
 export default function ProfilePage() {
   return (
     <div className={containerStyle}>
-      <DktText holder="h2">Profile information</DktText>
+      <DktText holder="h2">Your information</DktText>
       <ProfileField title="Full name" value="Daniel Bastos" />
       <ProfileField title="Display name" value="Daniel Bastos" />
       <ProfileField title="Email" value="dan@gmail.com" />

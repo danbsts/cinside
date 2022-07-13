@@ -49,6 +49,7 @@ export const Path = Object.freeze({
   PROBLEMS_PROBLEM_EDIT: '/problems/:problemId/edit',
   PROBLEMS_PROBLEM_SUBMISSIONS: '/problems/:problemId/submissions',
   PROFILE: '/profile',
+  PROFILE_EDIT: '/profile/edit',
   PROJECTS: '/projects',
   PROJECTS_PROJECT: '/projects/:id',
   PROJECTS_PROJECT_EDIT: '/projects/:id/edit',
@@ -85,7 +86,13 @@ registerGroup(
 
 registerRoute(Domain.HOME, Path.CATEGORIES);
 
-registerRoute(Domain.PROFILE, Path.PROFILE);
+registerGroup(
+  Domain.PROFILE,
+  [
+    Path.PROFILE,
+    Path.PROFILE_EDIT,
+  ],
+);
 
 registerGroup(
   Domain.PROBLEMS,
