@@ -65,8 +65,10 @@ export default function ProjectEditPage() {
             <DktButton negative style={buttonLayout}>Add</DktButton>
           </FlexLayout>
           <Contributors />
-          <DktButton negative>Cancel</DktButton>
-          <DktButton>Save</DktButton>
+          <FlexLayout justifyContent="center">
+            <DktButton negative>Cancel</DktButton>
+            <DktButton>Save</DktButton>
+          </FlexLayout>
         </FlexLayout>
       </Form>
     </Formik>

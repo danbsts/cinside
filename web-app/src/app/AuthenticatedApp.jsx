@@ -10,6 +10,7 @@ import DktLoader from 'shared/DktLoader';
 import DktRouter from 'router/DktRouter';
 import FlexLayout from 'shared/FlexLayout';
 import Header from 'header/Header';
+import ProfilePage from 'profile/ProfilePage';
 import ProjectEditPage from 'projects/project/ProjectEditPage';
 import ProjectListPage from 'projects/ProjectListPage';
 import ProjectPage from 'projects/project/ProjectPage';
@@ -30,6 +31,7 @@ function AppLayout() {
           <DktRouter>
             <Route component={ProjectEditPage} path={Path.PROJECTS_PROJECT_EDIT} />
             <Route component={ProjectPage} path={Path.PROJECTS_PROJECT} />
+            <Route component={ProfilePage} path={Path.PROFILE} />
             <Route component={ProjectListPage} path={Path.PROJECTS} />
           </DktRouter>
         </Suspense>
