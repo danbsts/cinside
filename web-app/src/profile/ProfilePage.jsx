@@ -2,6 +2,9 @@ import React from 'react';
 
 import { css } from '@emotion/css';
 
+import { Path } from 'router/routing';
+
+import DktButton from 'shared/DktButton';
 import DktText from 'shared/DktText';
 
 const containerStyle = css`
@@ -12,6 +15,11 @@ const containerStyle = css`
 const titleStyle = css`
   margin: 18px 0 4px;
   color: #235BFF;
+`;
+const editStyle = css`
+  margin-top: 16px;
+  display: block;
+  width: fit-content;
 `;
 
 function ProfileField({ title, value }) {
@@ -33,6 +41,7 @@ export default function ProfilePage() {
       <ProfileField title="LinkedIn" value="https://linkedin.com/in/dan-bastos" />
       <ProfileField title="Github" value="https://github.com/danbsts" />
       <ProfileField title="Skills" value="CSS, HTML, JavaScript, Java" />
+      <DktButton negative href={Path.PROFILE_EDIT} style={editStyle}>Edit</DktButton>
     </div>
   );
 }

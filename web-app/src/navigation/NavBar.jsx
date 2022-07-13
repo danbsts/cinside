@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
 import { css, cx } from '@emotion/css';
+import { Link } from 'react-router-dom';
+
+import { Path } from 'router/routing';
 
 import DktText from 'shared/DktText';
 import FlexLayout from 'shared/FlexLayout';
@@ -54,8 +57,12 @@ function ActiveNav({ setActive }) {
     <div className={activeContainerStyle}>
       <NavMenu setActive={setActive} />
       <FlexLayout flexDirection="column" style={menuOptionsContainerStyle}>
-        <DktText holder="h3" style={menuItemsSpaceStyle}>All projects</DktText>
-        <DktText holder="h3" style={menuItemsSpaceStyle}>Profile</DktText>
+        <DktText holder="h3" style={menuItemsSpaceStyle}>
+          <Link to={Path.PROJECTS}>All projects</Link>
+        </DktText>
+        <DktText holder="h3" style={menuItemsSpaceStyle}>
+          <Link to={Path.PROFILE}>Profile</Link>
+        </DktText>
       </FlexLayout>
     </div>
   );

@@ -3,8 +3,12 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import { css } from '@emotion/css';
 
+import { Path } from 'router/routing';
+
+import DktButton from 'shared/DktButton';
 import DktFormField from 'shared/form/DktFormField';
 import DktText from 'shared/DktText';
+import FlexLayout from 'shared/FlexLayout';
 
 const containerStyle = css`
   width: fit-content;
@@ -17,6 +21,12 @@ const titleStyle = css`
 `;
 const inputStyle = css`
   width: 100%;
+`;
+const buttonContainerStyle = css`
+  margin-top: 16px;
+  a:first-child {
+    margin-right: 12px;
+  }
 `;
 
 function ProfileField({ title, value }) {
@@ -38,6 +48,10 @@ function ProfileForm() {
       <DktFormField fieldStyle={inputStyle} name="linkedin" placeholder="https://linkedin.com/in/dan-bastos" title="LinkedIn" />
       <DktFormField fieldStyle={inputStyle} name="github" placeholder="https://github.com/danbsts" title="Github" />
       <DktFormField fieldStyle={inputStyle} name="skills" placeholder="CSS, HTML, Javascript, Java" title="Skills" />
+      <FlexLayout style={buttonContainerStyle}>
+        <DktButton negative href={Path.PROFILE}>Cancel</DktButton>
+        <DktButton submit>Save</DktButton>
+      </FlexLayout>
     </div>
   );
 }
