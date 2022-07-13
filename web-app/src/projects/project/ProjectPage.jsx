@@ -2,6 +2,7 @@ import React from 'react';
 
 import { css } from '@emotion/css';
 
+import Contributors from 'projects/project/Contributors';
 import DktButton from 'shared/DktButton';
 import DktMarkdown from 'shared/DktMarkdown';
 import DktText from 'shared/DktText';
@@ -40,32 +41,12 @@ const urlStyle = css`
   overflow-wrap: anywhere;
   margin: 8px 0 24px;
 `;
-const contributorsContainerStyle = css`
-  flex-wrap: wrap;
-  margin: 12px 0;
-`;
-const contributorStyle = css`
-  margin-bottom: 24px;
-`;
-const roleStyle = css`
-  font-size: 16px;
-  color: #235bff;
-`;
 
 function UrlBox({ title, url }) {
   return (
     <div>
       <DktText holder="h3">{title}</DktText>
       <DktText holder="h4" style={urlStyle}><a href={url}>{url}</a></DktText>
-    </div>
-  );
-}
-
-function ContributorBox({ displayName, role }) {
-  return (
-    <div className={contributorStyle}>
-      <DktText holder="h4">{displayName}</DktText>
-      <DktText holder="p" style={roleStyle}>{role}</DktText>
     </div>
   );
 }
@@ -95,14 +76,7 @@ export default function ProjectPage() {
         <UrlBox title="Github" url="https://github.com" />
       </FlexLayout>
       <DktText holder="h3">Contributors</DktText>
-      <FlexLayout justifyContent="space-between" style={contributorsContainerStyle}>
-        {[
-          { displayName: 'Daniel Bastos', role: 'Full-stack engineer' },
-          { displayName: 'Paulo Veloso', role: 'Backend Engineer' },
-          { displayName: 'Paulo Veloso', role: 'Backend Engineer' },
-          { displayName: 'Paulo Veloso', role: 'Backend Engineer' },
-        ].map(({ displayName, role }) => <ContributorBox displayName={displayName} role={role} />)}
-      </FlexLayout>
+      <Contributors />
     </FlexLayout>
   );
 }

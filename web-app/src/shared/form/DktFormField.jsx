@@ -12,7 +12,9 @@ const inputStyle = css`
   box-sizing: border-box;
   border: none;
   resize: vertical;
-  background: #F4F4F4;
+  background: #1C1C1C;
+  color: #EEE;
+  border: 1px solid #235BFF;
   border-radius: 10px;
   outline-color: #172B4D;
   outline-width: 1px;

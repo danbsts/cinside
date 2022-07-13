@@ -10,12 +10,13 @@ import DktLoader from 'shared/DktLoader';
 import DktRouter from 'router/DktRouter';
 import FlexLayout from 'shared/FlexLayout';
 import Header from 'header/Header';
+import ProjectEditPage from 'projects/project/ProjectEditPage';
 import ProjectListPage from 'projects/ProjectListPage';
 import ProjectPage from 'projects/project/ProjectPage';
 
 const pageStyle = css`
   height: 100%;
-  width: fit-content;
+  width: 100%;
   margin-top: 100px;
   max-width: 1000px;
 `;
@@ -27,6 +28,7 @@ function AppLayout() {
       <div className={pageStyle}>
         <Suspense fallback={<DktLoader />}>
           <DktRouter>
+            <Route component={ProjectEditPage} path={Path.PROJECTS_PROJECT_EDIT} />
             <Route component={ProjectPage} path={Path.PROJECTS_PROJECT} />
             <Route component={ProjectListPage} path={Path.PROJECTS} />
           </DktRouter>
