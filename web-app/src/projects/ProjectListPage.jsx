@@ -2,11 +2,13 @@ import React from 'react';
 
 import { Form, Formik } from 'formik';
 import { css } from '@emotion/css';
+import { useQuery } from 'react-query';
+import { useQueryParams } from 'router/useDikastisRouting';
 
 import DktButton from 'shared/DktButton';
 import DktFormField from 'shared/form/DktFormField';
 import FlexLayout from 'shared/FlexLayout';
-import ProjectBox from './ProjectBox';
+import ProjectBox from 'projects/ProjectBox';
 
 const searchContainerStyle = css`
   flex-wrap: wrap;
@@ -21,12 +23,12 @@ const addButtonStyle = css`
   margin: 20px 0 0;
 `;
 
-const visibility = {
+const ProjectVisibility = {
   ALL: 'All',
   PRIVATE: 'Private',
   PUBLIC: 'Public',
 };
-const status = {
+const ProjectStatus = {
   ALL: 'All',
   NEW_IDEA: 'New/Idea',
   // eslint-disable-next-line sort-keys
@@ -35,38 +37,42 @@ const status = {
   DEPLOYED_MAINTAINING: 'Deployed/Maintaining',
 };
 
-function ProjectList({
-  values,
-}) {
-  console.log(values);
+function ProjectList({ values }) {
+  const { page, status, visibility } = values;
+  const { data } = useQuery(`/projects?visibility=${visibility}&status=${status}&page=${page}`);
+  const { content } = data;
+  console.log(content);
   return (
     <Form>
       <FlexLayout justifyContent="space-between" style={searchContainerStyle}>
         <FlexLayout style={filterContainerStyle}>
           <DktFormField as="select" name="visibility" placeholder="All" title="Visibility">
-            {Object.entries(visibility).map(([value, display]) => (
+            {Object.entries(ProjectVisibility).map(([value, display]) => (
               <option key={value} value={value}>{display}</option>
             ))}
           </DktFormField>
           <DktFormField as="select" name="status" placeholder="All" title="Status">
-            {Object.entries(status).map(([value, display]) => (
+            {Object.entries(ProjectStatus).map(([value, display]) => (
               <option key={value} value={value}>{display}</option>
             ))}
           </DktFormField>
         </FlexLayout>
         <DktButton negative style={addButtonStyle}>Add project</DktButton>
       </FlexLayout>
-      <ProjectBox />
+      {content.map((project) => <ProjectBox project={project} />)}
     </Form>
   );
 }
 
 export default function ProjectListPage() {
+  const { page, status, visibility } = useQueryParams();
+  console.log(status);
   return (
     <Formik
       initialValues={{
-        status: visibility.ALL,
-        visibility: visibility.ALL,
+        page: page ?? 0,
+        status: status ?? ProjectStatus.ALL,
+        visibility: visibility ?? ProjectVisibility.ALL,
       }}
       validateOnBlur={false}
       validateOnChange={false}

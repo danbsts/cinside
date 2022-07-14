@@ -1,6 +1,8 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
 import { css } from '@emotion/css';
+import format from 'date-fns/format';
 
 import DktText from 'shared/DktText';
 import FlexLayout from 'shared/FlexLayout';
@@ -33,28 +35,42 @@ const descriptionStyle = css`
   margin-top: 12px;
 `;
 
-export default function ProjectBox() {
+const ProjectVisibility = {
+  ALL: 'All',
+  PRIVATE: 'Private',
+  PUBLIC: 'Public',
+};
+const ProjectStatus = {
+  ALL: 'All',
+  DEPLOYED_MAINTAINING: 'Deployed/Maintaining',
+  IN_DEVELOPMENT: 'In development',
+  NEW_IDEA: 'New/Idea',
+};
+
+export default function ProjectBox({ project }) {
+  const {
+    description, id, stack, startDate, status, title, visibility,
+  } = project;
   return (
     <div className={boxStyle}>
-      <FlexLayout>
-        <FlexLayout justifyContent="space-between">
-          <div>
-            <DktText holder="h2">Dikastis</DktText>
-            <DktText holder="h4" style={releaseDateStyle}>Dikastis</DktText>
-          </div>
-          <FlexLayout alignItems="flex-start" justifyContent="flex-end">
-            <ProjectTag negative>New</ProjectTag>
-            <ProjectTag style={tagStyle}>Private</ProjectTag>
+      <Link to={`/projects/${id}`}>
+        <FlexLayout>
+          <FlexLayout justifyContent="space-between">
+            <div>
+              <DktText holder="h2">{title}</DktText>
+              <DktText holder="h4" style={releaseDateStyle}>{format(new Date(startDate), 'LLLL, yyyy')}</DktText>
+            </div>
+            <FlexLayout alignItems="flex-start" justifyContent="flex-end">
+              <ProjectTag negative>{ProjectStatus[status]}</ProjectTag>
+              <ProjectTag style={tagStyle}>{ProjectVisibility[visibility]}</ProjectTag>
+            </FlexLayout>
           </FlexLayout>
         </FlexLayout>
-      </FlexLayout>
-      <FlexLayout style={stackContainerStyle}>
-        <ProjectTag style={stackTagStyle}>CSS</ProjectTag>
-        <ProjectTag style={stackTagStyle}>Java</ProjectTag>
-        <ProjectTag style={stackTagStyle}>Javascript</ProjectTag>
-        <ProjectTag style={stackTagStyle}>React</ProjectTag>
-      </FlexLayout>
-      <DktText holder="p" style={descriptionStyle}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard.</DktText>
+        <FlexLayout style={stackContainerStyle}>
+          {stack.map(((tech) => <ProjectTag style={stackTagStyle}>{tech}</ProjectTag>))}
+        </FlexLayout>
+        <DktText holder="p" style={descriptionStyle}>{description}</DktText>
+      </Link>
     </div>
   );
 }
