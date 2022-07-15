@@ -17,24 +17,22 @@ const contributorsContainerStyle = css`
   margin: 12px 0;
 `;
 
-function ContributorBox({ displayName, role }) {
+function ContributorBox({ name, role }) {
   return (
     <div className={contributorStyle}>
-      <DktText holder="h4">{displayName}</DktText>
+      <DktText holder="h4">{name}</DktText>
       <DktText holder="p" style={roleStyle}>{role}</DktText>
     </div>
   );
 }
 
-export default function Contributors() {
+export default function Contributors({ contributors }) {
   return (
     <FlexLayout justifyContent="space-between" style={contributorsContainerStyle}>
-      {[
-        { displayName: 'Daniel Bastos', role: 'Full-stack engineer' },
-        { displayName: 'Paulo Veloso', role: 'Backend Engineer' },
-        { displayName: 'Paulo Veloso', role: 'Backend Engineer' },
-        { displayName: 'Paulo Veloso', role: 'Backend Engineer' },
-      ].map(({ displayName, role }) => <ContributorBox displayName={displayName} role={role} />)}
+      {contributors.map(({ name, role }, idx) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <ContributorBox key={idx} name={name} role={role} />
+      ))}
     </FlexLayout>
   );
 }

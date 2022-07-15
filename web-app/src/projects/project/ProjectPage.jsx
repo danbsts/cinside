@@ -1,6 +1,11 @@
 import React from 'react';
 
 import { css } from '@emotion/css';
+import format from 'date-fns/format';
+import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
+
+import { ProjectStatus, ProjectVisibility } from 'projects/project-constants';
 
 import Contributors from 'projects/project/Contributors';
 import DktButton from 'shared/DktButton';
@@ -52,31 +57,36 @@ function UrlBox({ title, url }) {
 }
 
 export default function ProjectPage() {
+  const { id } = useParams();
+  const { data: project } = useQuery(`/projects/${id}`);
+  const {
+    contributors, description, repository, stack, startDate, status, title, url, visibility,
+  } = project;
   return (
     <FlexLayout flexDirection="column" style={pageStyle}>
       <FlexLayout justifyContent="space-between">
         <div>
-          <DktText holder="h2" style={titleStyle}>Dikastis</DktText>
-          <DktText holder="h4" style={dateStyle}>Dezembro, 2021</DktText>
+          <DktText holder="h2" style={titleStyle}>{title}</DktText>
+          <DktText holder="h4" style={dateStyle}>{format(new Date(startDate), 'LLLL, yyyy')}</DktText>
         </div>
-        <DktButton negative style={editStyle}>Edit</DktButton>
+        <DktButton negative href={`/projects/${id}/edit`} style={editStyle}>Edit</DktButton>
       </FlexLayout>
       <FlexLayout justifyContent="space-between" style={wrapStyle}>
         <FlexLayout style={tagContainerStyle}>
-          {['CSS', 'Java', 'Javascript', 'RabbitMQ', 'Javascript', 'RabbitMQ'].map((technology) => <ProjectTag style={tagStyle}>{technology}</ProjectTag>)}
+          {stack.map((tech) => <ProjectTag key={tech} style={tagStyle}>{tech}</ProjectTag>)}
         </FlexLayout>
         <FlexLayout justifyContent="flex-end" style={tagContainerStyle}>
-          <ProjectTag negative style={tagStyle}>New</ProjectTag>
-          <ProjectTag style={tagStyle}>Private</ProjectTag>
+          <ProjectTag negative style={tagStyle}>{ProjectStatus[status]}</ProjectTag>
+          <ProjectTag style={tagStyle}>{ProjectVisibility[visibility]}</ProjectTag>
         </FlexLayout>
       </FlexLayout>
-      <DktMarkdown content="Testando meu texto em markdown aqui" />
+      <DktMarkdown content={description} />
       <FlexLayout justifyContent="space-between" style={wrapStyle}>
-        <UrlBox title="Url" url="https://dikastis.com.br/asdhasjkdhaksdhkasdgksa" />
-        <UrlBox title="Github" url="https://github.com" />
+        <UrlBox title="Url" url={url} />
+        <UrlBox title="Github" url={repository} />
       </FlexLayout>
       <DktText holder="h3">Contributors</DktText>
-      <Contributors />
+      <Contributors contributors={contributors} />
     </FlexLayout>
   );
 }

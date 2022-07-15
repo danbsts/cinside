@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { css } from '@emotion/css';
 import format from 'date-fns/format';
 
+import { ProjectStatus, ProjectVisibility } from 'projects/project-constants';
+
 import DktText from 'shared/DktText';
 import FlexLayout from 'shared/FlexLayout';
 import ProjectTag from 'shared/ProjectTag';
@@ -35,22 +37,11 @@ const descriptionStyle = css`
   margin-top: 12px;
 `;
 
-const ProjectVisibility = {
-  ALL: 'All',
-  PRIVATE: 'Private',
-  PUBLIC: 'Public',
-};
-const ProjectStatus = {
-  ALL: 'All',
-  DEPLOYED_MAINTAINING: 'Deployed/Maintaining',
-  IN_DEVELOPMENT: 'In development',
-  NEW_IDEA: 'New/Idea',
-};
-
 export default function ProjectBox({ project }) {
   const {
     description, id, stack, startDate, status, title, visibility,
   } = project;
+
   return (
     <div className={boxStyle}>
       <Link to={`/projects/${id}`}>
@@ -67,7 +58,9 @@ export default function ProjectBox({ project }) {
           </FlexLayout>
         </FlexLayout>
         <FlexLayout style={stackContainerStyle}>
-          {stack.map(((tech) => <ProjectTag style={stackTagStyle}>{tech}</ProjectTag>))}
+          {stack.map(((tech) => (
+            <ProjectTag key={tech} style={stackTagStyle}>{tech}</ProjectTag>)
+          ))}
         </FlexLayout>
         <DktText holder="p" style={descriptionStyle}>{description}</DktText>
       </Link>

@@ -5,6 +5,8 @@ import { css } from '@emotion/css';
 import { useQuery } from 'react-query';
 import { useQueryParams } from 'router/useDikastisRouting';
 
+import { ProjectStatus, ProjectVisibility } from 'projects/project-constants';
+
 import DktButton from 'shared/DktButton';
 import DktFormField from 'shared/form/DktFormField';
 import FlexLayout from 'shared/FlexLayout';
@@ -23,25 +25,11 @@ const addButtonStyle = css`
   margin: 20px 0 0;
 `;
 
-const ProjectVisibility = {
-  ALL: 'All',
-  PRIVATE: 'Private',
-  PUBLIC: 'Public',
-};
-const ProjectStatus = {
-  ALL: 'All',
-  NEW_IDEA: 'New/Idea',
-  // eslint-disable-next-line sort-keys
-  IN_DEVELOPMENT: 'In development',
-  // eslint-disable-next-line sort-keys
-  DEPLOYED_MAINTAINING: 'Deployed/Maintaining',
-};
-
 function ProjectList({ values }) {
   const { page, status, visibility } = values;
   const { data } = useQuery(`/projects?visibility=${visibility}&status=${status}&page=${page}`);
   const { content } = data;
-  console.log(content);
+
   return (
     <Form>
       <FlexLayout justifyContent="space-between" style={searchContainerStyle}>
@@ -59,14 +47,14 @@ function ProjectList({ values }) {
         </FlexLayout>
         <DktButton negative style={addButtonStyle}>Add project</DktButton>
       </FlexLayout>
-      {content.map((project) => <ProjectBox project={project} />)}
+      {content.map((project) => <ProjectBox key={project.id} project={project} />)}
     </Form>
   );
 }
 
 export default function ProjectListPage() {
   const { page, status, visibility } = useQueryParams();
-  console.log(status);
+
   return (
     <Formik
       initialValues={{

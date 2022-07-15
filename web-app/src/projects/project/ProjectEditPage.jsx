@@ -64,7 +64,7 @@ export default function ProjectEditPage() {
             <DktFormField containerStyle={fitContentStyle} name="contributorRole" placeholder="Software Engineer" title="Role" />
             <DktButton negative style={buttonLayout}>Add</DktButton>
           </FlexLayout>
-          <Contributors />
+          <Contributors contributors={[]} />
           <FlexLayout justifyContent="center">
             <DktButton negative>Cancel</DktButton>
             <DktButton>Save</DktButton>
