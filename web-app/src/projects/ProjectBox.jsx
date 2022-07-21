@@ -22,6 +22,10 @@ const boxStyle = css`
 `;
 const releaseDateStyle = css`
   color: #235BFF;
+  margin-bottom: 8px;
+`;
+const wrapStyle = css`
+  flex-wrap: wrap;
 `;
 const tagStyle = css`
   margin-left: 4px;
@@ -46,12 +50,12 @@ export default function ProjectBox({ project }) {
     <div className={boxStyle}>
       <Link to={`/projects/${id}`}>
         <FlexLayout>
-          <FlexLayout justifyContent="space-between">
+          <FlexLayout justifyContent="space-between" style={wrapStyle}>
             <div>
               <DktText holder="h2">{title}</DktText>
               <DktText holder="h4" style={releaseDateStyle}>{format(new Date(startDate), 'LLLL, yyyy')}</DktText>
             </div>
-            <FlexLayout alignItems="flex-start" justifyContent="flex-end">
+            <FlexLayout alignItems="flex-start" justifyContent="flex-end" style={wrapStyle} width="fit-content">
               <ProjectTag negative>{ProjectStatus[status]}</ProjectTag>
               <ProjectTag style={tagStyle}>{ProjectVisibility[visibility]}</ProjectTag>
             </FlexLayout>

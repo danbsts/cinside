@@ -10,9 +10,10 @@ export default function FlexLayout({
   id,
   justifyContent = 'flex-start',
   style,
+  width,
 }) {
   const styleBase = css`
-    width: 100%;
+    width: ${width ?? '100%'};
     padding: 0;
     display: flex;
     flex-grow: ${expand ? 1 : 0};
