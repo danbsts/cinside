@@ -26,7 +26,7 @@ const stackStyle = css`
 
 function EditStack({ remove, stack }) {
   return stack.map((tech) => (
-    <FlexLayout alignItems="center" style={stackStyle}>
+    <FlexLayout key={tech} alignItems="center" style={stackStyle}>
       <ProjectTag key={tech}>{tech}</ProjectTag>
       <ClickableIcon alt="Remove" src={removeIcon} onClick={() => remove(tech)} />
     </FlexLayout>

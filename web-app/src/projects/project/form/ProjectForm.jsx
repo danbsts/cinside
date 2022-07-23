@@ -36,6 +36,16 @@ function getStartDate(initialValues) {
 export default function ProjectForm({ initialValues, submit }) {
   const startDate = format(getStartDate(initialValues), 'yyyy-MM-dd');
 
+  const onSubmit = (values) => {
+    const parseStartDate = new Date(values.startDate);
+    submit({
+      ...values,
+      startDate: `${format(parseStartDate, 'yyyy-MM-dd')}T00:00:00`,
+    });
+  };
+
+  const cancelLink = initialValues ? `/projects/${initialValues.id}` : '/projects';
+
   return (
     <Formik
       initialValues={{
@@ -53,9 +63,9 @@ export default function ProjectForm({ initialValues, submit }) {
         ...initialValues,
         startDate,
       }}
-      submit={submit}
       validateOnBlur={false}
       validateOnChange={false}
+      onSubmit={onSubmit}
     >
       <Form>
         <FlexLayout flexDirection="column" style={pageStyle}>
@@ -79,8 +89,8 @@ export default function ProjectForm({ initialValues, submit }) {
           <DktFormField fieldStyle={fullWidthStyle} name="repository" placeholder="https://github.com/user/project" title="Github" />
           <ProjectContributorsForm />
           <FlexLayout justifyContent="center">
-            <DktButton negative>Cancel</DktButton>
-            <DktButton style={buttonMarginStyle}>Save</DktButton>
+            <DktButton negative href={cancelLink}>Cancel</DktButton>
+            <DktButton submit style={buttonMarginStyle}>Save</DktButton>
           </FlexLayout>
         </FlexLayout>
       </Form>
