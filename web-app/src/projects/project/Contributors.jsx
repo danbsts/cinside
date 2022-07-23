@@ -21,6 +21,15 @@ const contributorsContainerStyle = css`
 `;
 
 function ContributorBox({ name, remove, role }) {
+  if (!remove) {
+    return (
+      <div className={contributorStyle}>
+        <DktText holder="h4">{name}</DktText>
+        <DktText holder="p" style={roleStyle}>{role}</DktText>
+      </div>
+    );
+  }
+
   return (
     <FlexLayout width="fit-content">
       <div className={contributorStyle}>
