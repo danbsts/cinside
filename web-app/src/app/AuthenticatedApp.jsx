@@ -12,6 +12,7 @@ import FlexLayout from 'shared/FlexLayout';
 import Header from 'header/Header';
 import ProfileEditPage from 'profile/ProfileEditPage';
 import ProfilePage from 'profile/ProfilePage';
+import ProjectCreationPage from 'projects/project/ProjectCreationPage';
 import ProjectEditPage from 'projects/project/ProjectEditPage';
 import ProjectListPage from 'projects/ProjectListPage';
 import ProjectPage from 'projects/project/ProjectPage';
@@ -31,6 +32,7 @@ function AppLayout() {
         <Suspense fallback={<DktLoader />}>
           <DktRouter>
             <Route component={ProjectEditPage} path={Path.PROJECTS_PROJECT_EDIT} />
+            <Route component={ProjectCreationPage} path={Path.PROJECTS_NEW} />
             <Route component={ProjectPage} path={Path.PROJECTS_PROJECT} />
             <Route component={ProfileEditPage} path={Path.PROFILE_EDIT} />
             <Route component={ProfilePage} path={Path.PROFILE} />

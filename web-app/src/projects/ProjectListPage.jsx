@@ -5,7 +5,10 @@ import { css } from '@emotion/css';
 import { useQuery } from 'react-query';
 import { useQueryParams } from 'router/useDikastisRouting';
 
-import { ProjectStatus, ProjectVisibility } from 'projects/project-constants';
+import {
+  ProjectStatus, ProjectStatusToKey, ProjectVisibility, ProjectVisibilityToKey,
+} from 'projects/project-constants';
+import { Path } from 'router/routing';
 
 import DktButton from 'shared/DktButton';
 import DktFormField from 'shared/form/DktFormField';
@@ -27,7 +30,7 @@ const addButtonStyle = css`
 
 function ProjectList({ values }) {
   const { page, status, visibility } = values;
-  const { data } = useQuery(`/projects?visibility=${visibility}&status=${status}&page=${page}`);
+  const { data } = useQuery(`/projects?visibility=${ProjectVisibilityToKey(visibility)}&status=${ProjectStatusToKey(status)}&page=${page}`);
   const { content } = data;
 
   return (
@@ -45,7 +48,7 @@ function ProjectList({ values }) {
             ))}
           </DktFormField>
         </FlexLayout>
-        <DktButton negative style={addButtonStyle}>Add project</DktButton>
+        <DktButton negative href={Path.PROJECTS_NEW} style={addButtonStyle}>Add project</DktButton>
       </FlexLayout>
       {content.map((project) => <ProjectBox key={project.id} project={project} />)}
     </Form>

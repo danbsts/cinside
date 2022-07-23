@@ -51,6 +51,7 @@ export const Path = Object.freeze({
   PROFILE: '/profile',
   PROFILE_EDIT: '/profile/edit',
   PROJECTS: '/projects',
+  PROJECTS_NEW: '/projects/new',
   PROJECTS_PROJECT: '/projects/:id',
   PROJECTS_PROJECT_EDIT: '/projects/:id/edit',
   ROOT: '/',
@@ -79,6 +80,7 @@ registerGroup(
   [
     Path.ROOT,
     Path.PROJECTS,
+    Path.PROJECTS_NEW,
     Path.PROJECTS_PROJECT,
     Path.PROJECTS_PROJECT_EDIT,
   ],

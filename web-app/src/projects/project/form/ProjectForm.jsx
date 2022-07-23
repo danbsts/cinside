@@ -4,7 +4,9 @@ import { Form, Formik } from 'formik';
 import { css } from '@emotion/css';
 import { format } from 'date-fns';
 
-import { ProjectStatus, ProjectVisibility } from 'projects/project-constants';
+import {
+  ProjectStatus, ProjectStatusToKey, ProjectVisibility, ProjectVisibilityToKey,
+} from 'projects/project-constants';
 import DktButton from 'shared/DktButton';
 import DktFormField from 'shared/form/DktFormField';
 import FlexLayout from 'shared/FlexLayout';
@@ -37,10 +39,13 @@ export default function ProjectForm({ initialValues, submit }) {
   const startDate = format(getStartDate(initialValues), 'yyyy-MM-dd');
 
   const onSubmit = (values) => {
+    const { status, visibility } = values;
     const parseStartDate = new Date(values.startDate);
     submit({
       ...values,
       startDate: `${format(parseStartDate, 'yyyy-MM-dd')}T00:00:00`,
+      status: ProjectStatusToKey(status),
+      visibility: ProjectVisibilityToKey(visibility),
     });
   };
 
@@ -56,10 +61,10 @@ export default function ProjectForm({ initialValues, submit }) {
         repository: '',
         stack: [],
         stackName: '',
-        status: '',
+        status: ProjectStatus.NEW_IDEA,
         title: '',
         url: '',
-        visibility: '',
+        visibility: ProjectVisibility.PUBLIC,
         ...initialValues,
         startDate,
       }}
