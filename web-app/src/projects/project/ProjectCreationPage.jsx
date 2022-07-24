@@ -12,9 +12,9 @@ export default function ProjectCreationPage() {
   const mutation = useMutation(
     (projectForm) => dikastisApi.post('/projects', projectForm),
     {
-      onSuccess: (values) => {
-        console.log(values);
-        history.push('/projects');
+      onSuccess: ({ data }) => {
+        const { id } = data;
+        history.push(`/projects/${id}`);
       },
     },
   );
