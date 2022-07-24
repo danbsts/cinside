@@ -30,6 +30,8 @@ data class Project @Creator @BsonCreator constructor(
   @param:BsonProperty("repository") var repository: String?,
   @field:BsonProperty("contributors")
   @param:BsonProperty("contributors") var contributors: List<Contributor>,
+  @field:BsonProperty("images")
+  @param:BsonProperty("images") var images: List<String>?,
   @field:BsonProperty("founderUsername")
   @param:BsonProperty("founderUsername") val founderUsername: String,
   @field:BsonProperty("_id")

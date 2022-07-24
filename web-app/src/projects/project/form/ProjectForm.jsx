@@ -10,8 +10,9 @@ import {
 import DktButton from 'shared/DktButton';
 import DktFormField from 'shared/form/DktFormField';
 import FlexLayout from 'shared/FlexLayout';
-import ProjectContributorsForm from './ProjectContributorsForm';
-import ProjectStackForm from './ProjectStackForm';
+import ProejctImageForm from 'projects/project/form/ProejctImageForm';
+import ProjectContributorsForm from 'projects/project/form/ProjectContributorsForm';
+import ProjectStackForm from 'projects/project/form/ProjectStackForm';
 
 const pageStyle = css`
   max-width: 90%;
@@ -58,6 +59,8 @@ export default function ProjectForm({ initialValues, submit }) {
         contributorRole: '',
         contributors: [],
         description: '',
+        imageUrl: '',
+        images: [],
         repository: '',
         stack: [],
         stackName: '',
@@ -93,6 +96,7 @@ export default function ProjectForm({ initialValues, submit }) {
           <DktFormField name="description" placeholder="Project description (this container accepts markdown)" title="Description" type="preview" />
           <DktFormField fieldStyle={fullWidthStyle} name="url" placeholder="https://mywebsite.com" title="Url" />
           <DktFormField fieldStyle={fullWidthStyle} name="repository" placeholder="https://github.com/user/project" title="Github" />
+          <ProejctImageForm />
           <ProjectContributorsForm />
           <FlexLayout justifyContent="center">
             <DktButton negative href={cancelLink}>Cancel</DktButton>

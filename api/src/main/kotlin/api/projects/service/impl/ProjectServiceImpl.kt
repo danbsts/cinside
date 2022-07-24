@@ -2,11 +2,11 @@ package api.projects.service.impl
 
 import api.auth.CustomAuthentication
 import api.people.dal.dao.PersonRepository
-import api.projects.mapper.ProjectMapper
 import api.projects.dal.dao.ProjectRepository
 import api.projects.dal.model.Contributor
 import api.projects.dal.model.Project
 import api.projects.dto.ProjectDTO
+import api.projects.mapper.ProjectMapper
 import api.projects.service.ProjectService
 import io.micronaut.data.model.Page
 import io.micronaut.http.HttpStatus
@@ -27,7 +27,8 @@ class ProjectServiceImpl(
       projectDTO.title == null || projectDTO.startDate == null ||
       projectDTO.status == null || projectDTO.visibility == null ||
       projectDTO.stack == null || projectDTO.description == null ||
-      projectDTO.contributors == null || projectDTO.stack.isEmpty()
+      projectDTO.contributors == null || projectDTO.stack.isEmpty() ||
+      projectDTO.images == null
     ) {
       throw HttpStatusException(HttpStatus.BAD_REQUEST, "Missing project information")
     }
@@ -57,6 +58,7 @@ class ProjectServiceImpl(
       url = projectDTO.url,
       repository = projectDTO.repository,
       contributors = contributors,
+      images = projectDTO.images,
       founderUsername = username
     )
     return projectRepository.save(project)
@@ -71,10 +73,10 @@ class ProjectServiceImpl(
   }
 
   override fun findAllPaged(page: Int, filterPrivate: Boolean): Page<ProjectDTO> {
-    val page = projectRepository.findAllPaged(page, filterPrivate)
+    val projectPage = projectRepository.findAllPaged(page, filterPrivate)
     val problemDTOs =
-      page.content.map { project -> projectMapper.projectToDTO(project) }
-    return Page.of(problemDTOs, page.pageable, page.totalSize)
+      projectPage.content.map { project -> projectMapper.projectToDTO(project) }
+    return Page.of(problemDTOs, projectPage.pageable, projectPage.totalSize)
   }
 
 
@@ -84,7 +86,7 @@ class ProjectServiceImpl(
       projectDTO.status == null || projectDTO.visibility == null ||
       projectDTO.stack == null || projectDTO.description == null ||
       projectDTO.contributors == null || projectDTO.stack.isEmpty() ||
-      projectDTO.id == null
+      projectDTO.images == null || projectDTO.id == null
     ) {
       throw HttpStatusException(HttpStatus.BAD_REQUEST, "Missing project information")
     }
@@ -113,6 +115,7 @@ class ProjectServiceImpl(
     replaceable.url = projectDTO.url
     replaceable.repository = projectDTO.repository
     replaceable.contributors = contributors
+    replaceable.images = projectDTO.images
 
     return projectRepository.update(replaceable)
   }

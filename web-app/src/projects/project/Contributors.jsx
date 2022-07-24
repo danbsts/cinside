@@ -10,6 +10,7 @@ import removeIcon from 'assets/remove-cross.svg';
 
 const contributorStyle = css`
   margin-bottom: 24px;
+  margin-right: 30px;
 `;
 const roleStyle = css`
   font-size: 16px;
@@ -43,7 +44,7 @@ function ContributorBox({ name, remove, role }) {
 
 export default function Contributors({ contributors, remove }) {
   return (
-    <FlexLayout justifyContent="space-between" style={contributorsContainerStyle}>
+    <FlexLayout style={contributorsContainerStyle}>
       {contributors.map(({ name, role }, idx) => (
         // eslint-disable-next-line react/no-array-index-key
         <ContributorBox key={idx} name={name} remove={remove} role={role} />

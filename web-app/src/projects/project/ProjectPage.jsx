@@ -12,6 +12,7 @@ import DktButton from 'shared/DktButton';
 import DktMarkdown from 'shared/DktMarkdown';
 import DktText from 'shared/DktText';
 import FlexLayout from 'shared/FlexLayout';
+import ImageBox from 'projects/project/ImageBox';
 import ProjectTag from 'shared/ProjectTag';
 
 const pageStyle = css`
@@ -60,8 +61,10 @@ export default function ProjectPage() {
   const { id } = useParams();
   const { data: project } = useQuery(`/projects/${id}`);
   const {
-    contributors, description, repository, stack, startDate, status, title, url, visibility,
+    contributors, description, images, isFounder, repository,
+    stack, startDate, status, title, url, visibility,
   } = project;
+
   return (
     <FlexLayout flexDirection="column" style={pageStyle}>
       <FlexLayout justifyContent="space-between">
@@ -69,7 +72,7 @@ export default function ProjectPage() {
           <DktText holder="h2" style={titleStyle}>{title}</DktText>
           <DktText holder="h4" style={dateStyle}>{format(new Date(startDate), 'LLLL, yyyy')}</DktText>
         </div>
-        <DktButton negative href={`/projects/${id}/edit`} style={editStyle}>Edit</DktButton>
+        {isFounder && <DktButton negative href={`/projects/${id}/edit`} style={editStyle}>Edit</DktButton>}
       </FlexLayout>
       <FlexLayout justifyContent="space-between" style={wrapStyle}>
         <FlexLayout style={tagContainerStyle}>
@@ -85,6 +88,7 @@ export default function ProjectPage() {
         <UrlBox title="Url" url={url} />
         <UrlBox title="Github" url={repository} />
       </FlexLayout>
+      <ImageBox images={images} />
       <DktText holder="h3">Contributors</DktText>
       <Contributors contributors={contributors} />
     </FlexLayout>

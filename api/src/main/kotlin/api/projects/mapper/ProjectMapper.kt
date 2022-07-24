@@ -30,6 +30,7 @@ class ProjectMapper(private val customAuthentication: CustomAuthentication) {
         .contributors
         .map { ContributorDTO(it.name, it.role, it.username) }
         .toMutableList(),
+      images = project.images?.toMutableList(),
     )
   }
 }
