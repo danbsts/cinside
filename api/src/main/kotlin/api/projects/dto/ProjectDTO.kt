@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 class ProjectDTO(
   val id: String? = null,
   val title: String? = null,
+  val isFounder: Boolean?,
   @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") val startDate: LocalDateTime? = null,
   val status: ProjectStatus? = null,
   val visibility: ProjectVisibility? = null,

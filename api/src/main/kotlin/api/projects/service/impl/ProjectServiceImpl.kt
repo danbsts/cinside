@@ -2,11 +2,10 @@ package api.projects.service.impl
 
 import api.auth.CustomAuthentication
 import api.people.dal.dao.PersonRepository
-import api.people.service.impl.PersonServiceImpl
+import api.projects.mapper.ProjectMapper
 import api.projects.dal.dao.ProjectRepository
 import api.projects.dal.model.Contributor
 import api.projects.dal.model.Project
-import api.projects.dto.ContributorDTO
 import api.projects.dto.ProjectDTO
 import api.projects.service.ProjectService
 import io.micronaut.data.model.Page
@@ -14,23 +13,20 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.exceptions.HttpStatusException
 import jakarta.inject.Singleton
 import org.bson.types.ObjectId
-import org.slf4j.LoggerFactory
 
 @Singleton
 class ProjectServiceImpl(
   private val personRepository: PersonRepository,
   private val projectRepository: ProjectRepository,
-  private val customAuthentication: CustomAuthentication
+  private val customAuthentication: CustomAuthentication,
+  private val projectMapper: ProjectMapper,
 ) : ProjectService {
-  val FOUNDER = "Founder"
-  val LOG = LoggerFactory.getLogger(PersonServiceImpl::class.java)
 
   override fun register(projectDTO: ProjectDTO): ObjectId? {
     if (
       projectDTO.title == null || projectDTO.startDate == null ||
       projectDTO.status == null || projectDTO.visibility == null ||
       projectDTO.stack == null || projectDTO.description == null ||
-      projectDTO.url == null || projectDTO.repository == null ||
       projectDTO.contributors == null || projectDTO.stack.isEmpty()
     ) {
       throw HttpStatusException(HttpStatus.BAD_REQUEST, "Missing project information")
@@ -43,11 +39,8 @@ class ProjectServiceImpl(
     }
     val contributors = projectDTO
       .contributors
-      .filter { username != it.username }
       .map { Contributor(it.name, it.role, it.username) }
       .toMutableList()
-    contributors
-      .add(Contributor(user.displayName!!, FOUNDER, username))
 
     val founderProjects = projectRepository.findByFounderUsername(username)
     if (founderProjects.size >= 10) {
@@ -74,43 +67,13 @@ class ProjectServiceImpl(
     val project = projectRepository.findById(id)
       ?: throw HttpStatusException(HttpStatus.NOT_FOUND, "Project $id not registered")
 
-    return ProjectDTO(
-      id = project.id.toString(),
-      title = project.title,
-      startDate = project.startDate,
-      status = project.status,
-      visibility = project.visibility,
-      stack = project.stack,
-      description = project.description,
-      url = project.url,
-      repository = project.repository,
-      contributors = project
-        .contributors
-        .map { ContributorDTO(it.name, it.role, it.username) }
-        .toMutableList(),
-    )
+    return projectMapper.projectToDTO(project)
   }
 
   override fun findAllPaged(page: Int, filterPrivate: Boolean): Page<ProjectDTO> {
     val page = projectRepository.findAllPaged(page, filterPrivate)
     val problemDTOs =
-      page.content.map { project ->
-        ProjectDTO(
-          id = project.id.toString(),
-          title = project.title,
-          startDate = project.startDate,
-          status = project.status,
-          visibility = project.visibility,
-          stack = project.stack,
-          description = project.description,
-          url = project.url,
-          repository = project.repository,
-          contributors = project
-            .contributors
-            .map { ContributorDTO(it.name, it.role, it.username) }
-            .toMutableList(),
-        )
-      }
+      page.content.map { project -> projectMapper.projectToDTO(project) }
     return Page.of(problemDTOs, page.pageable, page.totalSize)
   }
 
@@ -120,7 +83,6 @@ class ProjectServiceImpl(
       projectDTO.title == null || projectDTO.startDate == null ||
       projectDTO.status == null || projectDTO.visibility == null ||
       projectDTO.stack == null || projectDTO.description == null ||
-      projectDTO.url == null || projectDTO.repository == null ||
       projectDTO.contributors == null || projectDTO.stack.isEmpty() ||
       projectDTO.id == null
     ) {
@@ -139,10 +101,8 @@ class ProjectServiceImpl(
     }
 
     val contributors = projectDTO.contributors
-      .filter { userId != it.username }
       .map { Contributor(it.name, it.role, it.username) }
       .toMutableList()
-    contributors.add(Contributor(user.displayName!!, FOUNDER, userId))
 
     replaceable.title = projectDTO.title
     replaceable.startDate = projectDTO.startDate

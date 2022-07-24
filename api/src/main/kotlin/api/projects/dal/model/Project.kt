@@ -25,9 +25,9 @@ data class Project @Creator @BsonCreator constructor(
   @field:BsonProperty("description")
   @param:BsonProperty("description") var description: String,
   @field:BsonProperty("url")
-  @param:BsonProperty("url") var url: String,
+  @param:BsonProperty("url") var url: String?,
   @field:BsonProperty("repository")
-  @param:BsonProperty("repository") var repository: String,
+  @param:BsonProperty("repository") var repository: String?,
   @field:BsonProperty("contributors")
   @param:BsonProperty("contributors") var contributors: List<Contributor>,
   @field:BsonProperty("founderUsername")
