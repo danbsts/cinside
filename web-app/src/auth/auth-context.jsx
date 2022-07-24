@@ -20,7 +20,12 @@ function AuthProvider({ children }) {
   const login = React.useCallback(
     () => {
       history.push('/api/oauth/login/google');
-      auth.login(setAuthData);
+    },
+    [],
+  );
+  const loginSucceeded = React.useCallback(
+    () => {
+      setTimeout(() => auth.login(setAuthData), 3000);
     },
     [setAuthData],
   );
@@ -69,9 +74,9 @@ function AuthProvider({ children }) {
 
   const value = React.useMemo(
     () => ({
-      fetchUser, isLoggedIn, login, logout, register, user,
+      fetchUser, isLoggedIn, login, loginSucceeded, logout, register, user,
     }),
-    [fetchUser, isLoggedIn, login, logout, register, user],
+    [fetchUser, isLoggedIn, login, loginSucceeded, logout, register, user],
   );
 
   return (

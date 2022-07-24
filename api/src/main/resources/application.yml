@@ -25,7 +25,7 @@ micronaut:
         path: "/api/logout"
     redirect:
       login-failure: "/sign-up"
-      login-success: "/projects"
+      login-success: "/sign-in-succeeded"
       logout: "/"
 netty:
   default:

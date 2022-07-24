@@ -56,6 +56,7 @@ export const Path = Object.freeze({
   PROJECTS_PROJECT_EDIT: '/projects/:id/edit',
   ROOT: '/',
   SIGN_IN: '/sign-in',
+  SIGN_IN_SUCCEEDED: '/sign-in-succeeded',
   SIGN_UP: '/sign-up',
   TEAMS_HOME: '/teams',
   TEAMS_NEW: '/teams/new',
@@ -78,6 +79,7 @@ export const DomainEntryPoint = Object.freeze({
 registerGroup(
   Domain.PROJECTS,
   [
+    Path.SIGN_IN_SUCCEEDED,
     Path.ROOT,
     Path.PROJECTS,
     Path.PROJECTS_NEW,

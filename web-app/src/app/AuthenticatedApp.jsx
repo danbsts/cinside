@@ -37,6 +37,7 @@ function AppLayout() {
             <Route component={ProfileEditPage} path={Path.PROFILE_EDIT} />
             <Route component={ProfilePage} path={Path.PROFILE} />
             <Route component={ProjectListPage} path={Path.PROJECTS} />
+            <Route exact component={ProjectListPage} path={Path.ROOT} />
           </DktRouter>
         </Suspense>
       </div>

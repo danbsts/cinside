@@ -2,3 +2,4 @@
 oauth/
 .idea/
 .DS_Store
+bin/
