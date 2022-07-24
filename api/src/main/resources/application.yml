@@ -15,10 +15,6 @@ micronaut:
             issuer: 'https://accounts.google.com'
       login-uri: "/api/oauth/login{/provider}"
       callback-uri: "/api/oauth/callback{/provider}"
-      openid:
-        nonce:
-          cookie:
-            cookie-max-age: 1d
     endpoints:
       logout:
         get-allowed: true
@@ -27,6 +23,10 @@ micronaut:
       login-failure: "/sign-up"
       login-success: "/sign-in-succeeded"
       logout: "/logout-succeeded"
+    token:
+      jwt:
+        claims-validators:
+          expiration: false
 netty:
   default:
     allocator:
