@@ -66,6 +66,7 @@ export default function ProjectForm({ initialValues, submit }) {
         url: '',
         visibility: ProjectVisibility.PUBLIC,
         ...initialValues,
+        // eslint-disable-next-line sort-keys
         startDate,
       }}
       validateOnBlur={false}

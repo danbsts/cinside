@@ -7,7 +7,6 @@ import { Path } from 'router/routing';
 
 import DktText from 'shared/DktText';
 import FlexLayout from 'shared/FlexLayout';
-import { useAuth } from 'auth/auth-context';
 
 const barStyle = css`
   width: 40px;
@@ -54,7 +53,6 @@ function NavMenu({ setActive, value }) {
 }
 
 function ActiveNav({ setActive }) {
-  const { logout } = useAuth();
   return (
     <div className={activeContainerStyle}>
       <NavMenu setActive={setActive} />
@@ -66,7 +64,7 @@ function ActiveNav({ setActive }) {
           <Link to={Path.PROFILE}>Profile</Link>
         </DktText>
         <DktText holder="h3" style={menuItemsSpaceStyle}>
-          <div role="presentation" onClick={logout}>Logout</div>
+          <Link to="/api/logout">Logout</Link>
         </DktText>
       </FlexLayout>
     </div>

@@ -10,6 +10,7 @@ import DktLoader from 'shared/DktLoader';
 import DktRouter from 'router/DktRouter';
 import FlexLayout from 'shared/FlexLayout';
 import Header from 'header/Header';
+import LogoutSucceeded from 'auth/LogoutSucceeded';
 import ProfileEditPage from 'profile/ProfileEditPage';
 import ProfilePage from 'profile/ProfilePage';
 import ProjectCreationPage from 'projects/project/ProjectCreationPage';
@@ -31,6 +32,7 @@ function AppLayout() {
       <div className={pageStyle}>
         <Suspense fallback={<DktLoader />}>
           <DktRouter>
+            <Route component={LogoutSucceeded} path={Path.LOGOUT_SUCCEEDED} />
             <Route component={ProjectEditPage} path={Path.PROJECTS_PROJECT_EDIT} />
             <Route component={ProjectCreationPage} path={Path.PROJECTS_NEW} />
             <Route component={ProjectPage} path={Path.PROJECTS_PROJECT} />

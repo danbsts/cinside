@@ -26,7 +26,7 @@ micronaut:
     redirect:
       login-failure: "/sign-up"
       login-success: "/sign-in-succeeded"
-      logout: "/"
+      logout: "/logout-succeeded"
 netty:
   default:
     allocator:

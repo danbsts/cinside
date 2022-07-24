@@ -35,6 +35,7 @@ export const getRoutes = () => Object.freeze(routes);
 // ADD ROUTES BELOW THIS LINE
 // TODO - change parameters name to match pathname
 export const Path = Object.freeze({
+  LOGOUT_SUCCEEDED: '/logout-succeeded',
   ORGANIZATION: '/organizations/:organizationId',
   ORGANIZATIONS_HOME: '/organizations',
   ORGANIZATION_TEAM: '/organizations/:organizationId/:teamId',
@@ -80,6 +81,7 @@ registerGroup(
   Domain.PROJECTS,
   [
     Path.SIGN_IN_SUCCEEDED,
+    Path.LOGOUT_SUCCEEDED,
     Path.ROOT,
     Path.PROJECTS,
     Path.PROJECTS_NEW,

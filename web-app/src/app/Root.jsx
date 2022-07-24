@@ -16,11 +16,11 @@ import StackErrorPage from 'shared/error/StackErrorPage';
 import UnauthenticatedApp from 'app/UnathenticatedApp';
 
 function App() {
-  const { isLoggedIn, logout } = useAuth();
+  const { hasToken, isLoggedIn, logout } = useAuth();
   const loggedIn = isLoggedIn();
 
   useEffect(() => {
-    if (!loggedIn) logout();
+    if (!loggedIn && hasToken()) logout();
   }, [loggedIn]);
 
   return loggedIn ? <AuthenticatedApp /> : <UnauthenticatedApp />;

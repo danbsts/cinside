@@ -41,7 +41,6 @@ function AuthProvider({ children }) {
     queryClient.clear();
     auth.logout();
     setAuthData({});
-    // history.push('/api/logout');
   }, [setAuthData]);
   const fetchUser = React.useCallback(() => {
     dikastisApi.get('/people').then(({ data: person }) => {
@@ -57,6 +56,9 @@ function AuthProvider({ children }) {
     const valid = isBefore(now, expirationDate);
     return valid;
   }, [expiration]);
+  const hasToken = React.useCallback(() => (
+    expiration !== undefined && expiration !== null
+  ), [expiration]);
 
   // useEffect(() => {
   //   if (username != null) {
@@ -74,9 +76,9 @@ function AuthProvider({ children }) {
 
   const value = React.useMemo(
     () => ({
-      fetchUser, isLoggedIn, login, loginSucceeded, logout, register, user,
+      fetchUser, hasToken, isLoggedIn, login, loginSucceeded, logout, register, user,
     }),
-    [fetchUser, isLoggedIn, login, loginSucceeded, logout, register, user],
+    [hasToken, fetchUser, isLoggedIn, login, loginSucceeded, logout, register, user],
   );
 
   return (
