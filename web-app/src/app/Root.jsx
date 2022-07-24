@@ -1,10 +1,11 @@
 import React, { Suspense, useEffect } from 'react';
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryClientProvider } from 'react-query';
 
 import { AuthProvider, useAuth } from 'auth/auth-context';
+import { Path } from 'router/routing';
 import { ToastProvider } from 'toast/toast-context';
 import { queryClient } from 'dikastis-api';
 
@@ -12,6 +13,7 @@ import { removeDupedForwardSlashes, removeTrailingForwardSlash } from 'router/Re
 import AuthenticatedApp from 'app/AuthenticatedApp';
 import DktLoader from 'shared/DktLoader';
 import DktRouter from 'router/DktRouter';
+import LogoutSucceeded from 'auth/LogoutSucceeded';
 import StackErrorPage from 'shared/error/StackErrorPage';
 import UnauthenticatedApp from 'app/UnathenticatedApp';
 
@@ -31,6 +33,7 @@ function Root() {
     <DktRouter>
       {removeDupedForwardSlashes()}
       {removeTrailingForwardSlash()}
+      <Route component={LogoutSucceeded} path={Path.LOGOUT_SUCCEEDED} />
       <App />
     </DktRouter>
   );

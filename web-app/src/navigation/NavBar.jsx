@@ -4,9 +4,12 @@ import { css, cx } from '@emotion/css';
 import { Link } from 'react-router-dom';
 
 import { Path } from 'router/routing';
+import { useAuth } from 'auth/auth-context';
 
+import AuthOptions from 'navigation/AuthOptions';
 import DktText from 'shared/DktText';
 import FlexLayout from 'shared/FlexLayout';
+import UnauthOptions from 'navigation/UnauthOptions';
 
 const barStyle = css`
   width: 40px;
@@ -53,6 +56,11 @@ function NavMenu({ setActive, value }) {
 }
 
 function ActiveNav({ setActive }) {
+  const { isLoggedIn } = useAuth();
+
+  const options = isLoggedIn() ? <AuthOptions itemsStyle={menuItemsSpaceStyle} />
+    : <UnauthOptions itemsStyle={menuItemsSpaceStyle} />;
+
   return (
     <div className={activeContainerStyle}>
       <NavMenu setActive={setActive} />
@@ -60,12 +68,7 @@ function ActiveNav({ setActive }) {
         <DktText holder="h3" style={menuItemsSpaceStyle}>
           <Link to={Path.PROJECTS}>All projects</Link>
         </DktText>
-        <DktText holder="h3" style={menuItemsSpaceStyle}>
-          <Link to={Path.PROFILE}>Profile</Link>
-        </DktText>
-        <DktText holder="h3" style={menuItemsSpaceStyle}>
-          <Link to="/api/logout">Logout</Link>
-        </DktText>
+        {options}
       </FlexLayout>
     </div>
   );

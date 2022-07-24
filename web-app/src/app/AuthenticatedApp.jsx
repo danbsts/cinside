@@ -6,7 +6,6 @@ import { Path } from 'router/routing';
 
 import AppWithHeaders from 'app/AppWithHeaders';
 import DktRouter from 'router/DktRouter';
-import LogoutSucceeded from 'auth/LogoutSucceeded';
 import ProfileEditPage from 'profile/ProfileEditPage';
 import ProfilePage from 'profile/ProfilePage';
 import ProjectCreationPage from 'projects/project/ProjectCreationPage';
@@ -18,7 +17,6 @@ function AppLayout() {
   return (
     <AppWithHeaders>
       <DktRouter>
-        <Route component={LogoutSucceeded} path={Path.LOGOUT_SUCCEEDED} />
         <Route component={ProjectEditPage} path={Path.PROJECTS_PROJECT_EDIT} />
         <Route component={ProjectCreationPage} path={Path.PROJECTS_NEW} />
         <Route component={ProjectPage} path={Path.PROJECTS_PROJECT} />
