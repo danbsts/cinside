@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { css } from '@emotion/css';
+import { useQuery } from 'react-query';
 
 import { Path } from 'router/routing';
 
@@ -32,15 +33,25 @@ function ProfileField({ title, value }) {
 }
 
 export default function ProfilePage() {
+  const { data: profile } = useQuery('/people');
+  const {
+    displayName,
+    email,
+    fullName,
+    github,
+    linkedin,
+    skills,
+  } = profile;
+
   return (
     <div className={containerStyle}>
       <DktText holder="h2">Your information</DktText>
-      <ProfileField title="Full name" value="Daniel Bastos" />
-      <ProfileField title="Display name" value="Daniel Bastos" />
-      <ProfileField title="Email" value="dan@gmail.com" />
-      <ProfileField title="LinkedIn" value="https://linkedin.com/in/dan-bastos" />
-      <ProfileField title="Github" value="https://github.com/danbsts" />
-      <ProfileField title="Skills" value="CSS, HTML, JavaScript, Java" />
+      <ProfileField title="Full name" value={fullName} />
+      <ProfileField title="Display name" value={displayName} />
+      <ProfileField title="Email" value={email} />
+      <ProfileField title="LinkedIn" value={linkedin} />
+      <ProfileField title="Github" value={github} />
+      <ProfileField title="Skills" value={skills} />
       <DktButton negative href={Path.PROFILE_EDIT} style={editStyle}>Edit</DktButton>
     </div>
   );

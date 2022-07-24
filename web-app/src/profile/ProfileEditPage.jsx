@@ -1,9 +1,12 @@
 import React from 'react';
 
 import { Form, Formik } from 'formik';
+import { useMutation, useQuery } from 'react-query';
 import { css } from '@emotion/css';
+import { useHistory } from 'react-router-dom';
 
 import { Path } from 'router/routing';
+import { dikastisApi } from 'dikastis-api';
 
 import DktButton from 'shared/DktButton';
 import DktFormField from 'shared/form/DktFormField';
@@ -38,12 +41,12 @@ function ProfileField({ title, value }) {
   );
 }
 
-function ProfileForm() {
+function ProfileForm({ email, fullName }) {
   return (
     <div className={containerStyle}>
       <DktText holder="h2">Edit your information</DktText>
-      <ProfileField title="Full name" value="Daniel Bastos" />
-      <ProfileField title="Email" value="dan@gmail.com" />
+      <ProfileField title="Full name" value={fullName} />
+      <ProfileField title="Email" value={email} />
       <DktFormField fieldStyle={inputStyle} name="displayName" placeholder="Daniel Bastos" title="Display name" />
       <DktFormField fieldStyle={inputStyle} name="linkedin" placeholder="https://linkedin.com/in/dan-bastos" title="LinkedIn" />
       <DktFormField fieldStyle={inputStyle} name="github" placeholder="https://github.com/danbsts" title="Github" />
@@ -57,17 +60,37 @@ function ProfileForm() {
 }
 
 export default function ProfileEditPage() {
+  const history = useHistory();
+  const { data: profile } = useQuery('/people');
+  const {
+    displayName,
+    email,
+    fullName,
+    github,
+    linkedin,
+    skills,
+  } = profile;
+  const mutation = useMutation(
+    (personForm) => dikastisApi.put('/people', personForm),
+    {
+      onSuccess: () => {
+        history.push('/profile');
+      },
+    },
+  );
+
   return (
     <Formik
       initialValues={{
-        displayName: '',
-        github: '',
-        linkedin: '',
-        skils: '',
+        displayName,
+        github,
+        linkedin,
+        skills,
       }}
+      onSubmit={mutation.mutate}
     >
       <Form>
-        <ProfileForm />
+        <ProfileForm email={email} fullName={fullName} />
       </Form>
     </Formik>
   );
