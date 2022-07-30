@@ -15,4 +15,6 @@ interface ProjectService {
   fun update(projectDTO: ProjectDTO): Long
 
   fun delete(id: ObjectId): Long
+
+  fun sendJoinRequest(objectId: ObjectId)
 }

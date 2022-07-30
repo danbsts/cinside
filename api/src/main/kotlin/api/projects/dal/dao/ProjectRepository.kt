@@ -1,5 +1,6 @@
 package api.projects.dal.dao
 
+import api.projects.dal.model.JoinRequest
 import api.projects.dal.model.Project
 import io.micronaut.data.model.Page
 import org.bson.types.ObjectId
@@ -17,4 +18,6 @@ interface ProjectRepository {
   fun update(project: Project): Long
 
   fun delete(id: ObjectId): Long
+
+  fun addJoinRequest(id: ObjectId, joinRequest: JoinRequest): Long
 }

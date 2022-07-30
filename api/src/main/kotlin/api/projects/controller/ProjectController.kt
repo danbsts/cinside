@@ -66,4 +66,12 @@ class ProjectController(
     }
     return HttpResponse.noContent()
   }
+
+  @Post("{id}/join")
+  @Secured(SecurityRule.IS_AUTHENTICATED)
+  fun join(id: String): HttpResponse<Any> {
+    val objectId = ObjectId(id)
+    projectService.sendJoinRequest(objectId)
+    return HttpResponse.noContent()
+  }
 }

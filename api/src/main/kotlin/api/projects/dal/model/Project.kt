@@ -38,4 +38,6 @@ data class Project @Creator @BsonCreator constructor(
   @param:BsonProperty("_id") val id: ObjectId? = null,
   @field:BsonProperty("creationDate")
   @param:BsonProperty("creationDate") val registrationDate: LocalDateTime = LocalDateTime.now(),
+  @field:BsonProperty("joinRequests")
+  @param:BsonProperty("joinRequests") val joinRequests: List<JoinRequest>? = listOf(),
 )

@@ -4,6 +4,7 @@ import api.auth.CustomAuthentication
 import api.people.dal.dao.PersonRepository
 import api.projects.dal.dao.ProjectRepository
 import api.projects.dal.model.Contributor
+import api.projects.dal.model.JoinRequest
 import api.projects.dal.model.Project
 import api.projects.dto.ProjectDTO
 import api.projects.mapper.ProjectMapper
@@ -118,6 +119,12 @@ class ProjectServiceImpl(
     replaceable.images = projectDTO.images
 
     return projectRepository.update(replaceable)
+  }
+
+  override fun sendJoinRequest(objectId: ObjectId) {
+    val username = customAuthentication.getUserName()
+    val joinRequest = JoinRequest(username)
+    projectRepository.addJoinRequest(objectId, joinRequest)
   }
 
   override fun delete(id: ObjectId): Long {

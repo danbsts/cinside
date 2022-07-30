@@ -2,12 +2,14 @@ package api.projects.dal.dao.impl
 
 import api.configuration.MongoDbConfiguration
 import api.projects.dal.dao.ProjectRepository
+import api.projects.dal.model.JoinRequest
 import api.projects.dal.model.Project
 import api.projects.dto.ProjectVisibility
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Sorts
+import com.mongodb.client.model.Updates
 import io.micronaut.data.model.Page
 import io.micronaut.data.model.Pageable
 import jakarta.inject.Singleton
@@ -82,5 +84,12 @@ class MongoDbProjectRepository(
   override fun delete(id: ObjectId): Long {
     val filter = Filters.eq("_id", id)
     return collection.deleteOne(filter).deletedCount
+  }
+
+  override fun addJoinRequest(id: ObjectId, joinRequest: JoinRequest): Long {
+    val filter = Filters.eq("_id", id)
+    val update = Updates.push("joinRequests", joinRequest)
+    val result = collection.updateOne(filter, update)
+    return result.modifiedCount
   }
 }
