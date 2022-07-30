@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { css } from '@emotion/css';
 import format from 'date-fns/format';
@@ -13,6 +13,7 @@ import DktMarkdown from 'shared/DktMarkdown';
 import DktText from 'shared/DktText';
 import FlexLayout from 'shared/FlexLayout';
 import ImageBox from 'projects/project/ImageBox';
+import JoinModal from 'projects/project/JoinModal';
 import ProjectTag from 'shared/ProjectTag';
 
 const pageStyle = css`
@@ -47,6 +48,9 @@ const urlStyle = css`
   overflow-wrap: anywhere;
   margin: 8px 0 24px;
 `;
+const joinRequestStyle = css`
+  margin: 8px auto 40px;
+`;
 
 function UrlBox({ title, url }) {
   return (
@@ -58,6 +62,7 @@ function UrlBox({ title, url }) {
 }
 
 export default function ProjectPage() {
+  const [modal, setModal] = useState(false);
   const { id } = useParams();
   const { data: project } = useQuery(`/projects/${id}`);
   const {
@@ -91,6 +96,10 @@ export default function ProjectPage() {
       <ImageBox images={images} />
       <DktText holder="h3">Contributors</DktText>
       <Contributors contributors={contributors} />
+      <FlexLayout justifyContent="center" style={joinRequestStyle}>
+        <DktButton negative onClick={() => setModal(true)}>Request to Join</DktButton>
+      </FlexLayout>
+      {modal && <JoinModal close={() => setModal(false)} projectId={id} />}
     </FlexLayout>
   );
 }
