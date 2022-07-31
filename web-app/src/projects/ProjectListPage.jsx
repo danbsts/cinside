@@ -28,10 +28,24 @@ const addButtonStyle = css`
   margin: 20px 0 0;
 `;
 
+function getFilters(visibility, status, page) {
+  const filters = [];
+
+  if (visibility !== ProjectVisibility.ALL && visibility !== ProjectVisibility.ALL.toUpperCase()) {
+    filters.push(`visibility=${ProjectVisibilityToKey(visibility)}`);
+  }
+  if (status !== ProjectStatus.ALL && status !== ProjectStatus.ALL.toUpperCase()) {
+    filters.push(`status=${ProjectStatusToKey(status)}`);
+  }
+  filters.push(`page=${page ?? 1}`);
+
+  return filters.join('&');
+}
+
 function ProjectList({ values }) {
   const { page, status, visibility } = values;
-  const { data } = useQuery(`/projects?visibility=${ProjectVisibilityToKey(visibility)}&status=${ProjectStatusToKey(status)}&page=${page}`);
-  const { content } = data;
+  const { data } = useQuery(`/projects?${getFilters(visibility, status, page)}`);
+  const { content, empty } = data;
 
   useEffect(() => { document.title = 'All projects'; }, []);
 
@@ -52,7 +66,7 @@ function ProjectList({ values }) {
         </FlexLayout>
         <DktButton negative href={Path.PROJECTS_NEW} style={addButtonStyle}>Add project</DktButton>
       </FlexLayout>
-      {content.map((project) => <ProjectBox key={project.id} project={project} />)}
+      {!empty && content.map((project) => <ProjectBox key={project.id} project={project} />)}
     </Form>
   );
 }
@@ -63,7 +77,7 @@ export default function ProjectListPage() {
   return (
     <Formik
       initialValues={{
-        page: page ?? 0,
+        page: page ?? 1,
         status: status ?? ProjectStatus.ALL,
         visibility: visibility ?? ProjectVisibility.ALL,
       }}

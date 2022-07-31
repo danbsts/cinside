@@ -4,16 +4,17 @@ import api.configuration.MongoDbConfiguration
 import api.projects.dal.dao.ProjectRepository
 import api.projects.dal.model.JoinRequest
 import api.projects.dal.model.Project
+import api.projects.dto.ProjectStatus
 import api.projects.dto.ProjectVisibility
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
-import com.mongodb.client.MongoCursor
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Sorts
 import com.mongodb.client.model.Updates
 import io.micronaut.data.model.Page
 import io.micronaut.data.model.Pageable
 import jakarta.inject.Singleton
+import org.bson.conversions.Bson
 import org.bson.types.ObjectId
 import kotlin.math.ceil
 
@@ -49,12 +50,13 @@ class MongoDbProjectRepository(
     return result.first()
   }
 
-  override fun findAllPaged(pageNumber: Int, filterPrivate: Boolean): Page<Project> {
-    val filter = if (filterPrivate) Filters.eq("visibility", ProjectVisibility.PUBLIC) else
-      Filters.or(
-        Filters.eq("visibility", ProjectVisibility.PUBLIC),
-        Filters.eq("visibility", ProjectVisibility.PRIVATE)
-      )
+  override fun findAllPaged(
+    pageNumber: Int,
+    projectStatus: ProjectStatus?,
+    projectVisibility: ProjectVisibility?,
+    filterPrivate: Boolean
+  ): Page<Project> {
+    val filter = getProjectFilters(projectStatus, projectVisibility, filterPrivate)
     val sort = Sorts.ascending("title")
 
     val totalRecords: Long = collection.countDocuments(filter)
@@ -74,6 +76,23 @@ class MongoDbProjectRepository(
       result.add(mongoCursor.next())
     }
     return Page.of(result, Pageable.from(realPageNumber, PAGE_SIZE), totalRecords)
+  }
+
+  private fun getProjectFilters(
+    projectStatus: ProjectStatus?,
+    projectVisibility: ProjectVisibility?,
+    filterPrivate: Boolean
+  ): Bson {
+    val filters = ArrayList<Bson>()
+    if (filterPrivate) {
+      filters.add(Filters.eq("visibility", ProjectVisibility.PUBLIC))
+    }
+    if (!filterPrivate) {
+      projectVisibility?.let { filters.add(Filters.eq("visibility", it)) }
+    }
+    projectStatus?.let { filters.add(Filters.eq("status", it)) }
+
+    return if (filters.isEmpty()) Filters.empty() else Filters.and(filters)
   }
 
   override fun update(project: Project): Long {

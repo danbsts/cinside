@@ -7,6 +7,8 @@ import api.projects.dal.model.Contributor
 import api.projects.dal.model.JoinRequest
 import api.projects.dal.model.Project
 import api.projects.dto.ProjectDTO
+import api.projects.dto.ProjectStatus
+import api.projects.dto.ProjectVisibility
 import api.projects.mapper.ProjectMapper
 import api.projects.service.ProjectService
 import io.micronaut.data.model.Page
@@ -73,8 +75,13 @@ class ProjectServiceImpl(
     return projectMapper.projectToDTO(project)
   }
 
-  override fun findAllPaged(page: Int, filterPrivate: Boolean): Page<ProjectDTO> {
-    val projectPage = projectRepository.findAllPaged(page, filterPrivate)
+  override fun findAllPaged(
+    page: Int,
+    projectStatus: ProjectStatus?,
+    projectVisibility: ProjectVisibility?,
+    filterPrivate: Boolean
+  ): Page<ProjectDTO> {
+    val projectPage = projectRepository.findAllPaged(page, projectStatus, projectVisibility, filterPrivate)
     val problemDTOs =
       projectPage.content.map { project -> projectMapper.projectToDTO(project) }
     return Page.of(problemDTOs, projectPage.pageable, projectPage.totalSize)

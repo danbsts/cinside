@@ -2,6 +2,8 @@ package api.projects.controller;
 
 import api.auth.CustomAuthentication
 import api.projects.dto.ProjectDTO
+import api.projects.dto.ProjectStatus
+import api.projects.dto.ProjectVisibility
 import api.projects.service.ProjectService
 import io.micronaut.data.model.Page
 import io.micronaut.http.HttpResponse
@@ -28,14 +30,14 @@ class ProjectController(
     return HttpResponse.created(ProjectDTO(id = projectId?.toString()))
   }
 
-  @Get("{?page}")
+  @Get("{?page,visibility,status}")
   @Secured(SecurityRule.IS_ANONYMOUS)
-  fun find(page: Int?): HttpResponse<Page<ProjectDTO>> {
+  fun find(page: Int?, visibility: ProjectVisibility?, status: ProjectStatus?): HttpResponse<Page<ProjectDTO>> {
     val pageNumber = page ?: 1
     if (!customAuthentication.isAuthenticated()) {
-      return HttpResponse.ok(projectService.findAllPaged(pageNumber, true))
+      return HttpResponse.ok(projectService.findAllPaged(pageNumber, status, visibility, true))
     }
-    return HttpResponse.ok(projectService.findAllPaged(pageNumber))
+    return HttpResponse.ok(projectService.findAllPaged(pageNumber, status, visibility))
   }
 
   @Get("/{id}")

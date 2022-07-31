@@ -2,7 +2,8 @@ package api.projects.dal.dao
 
 import api.projects.dal.model.JoinRequest
 import api.projects.dal.model.Project
-import com.mongodb.client.MongoCursor
+import api.projects.dto.ProjectStatus
+import api.projects.dto.ProjectVisibility
 import io.micronaut.data.model.Page
 import org.bson.types.ObjectId
 
@@ -14,7 +15,12 @@ interface ProjectRepository {
 
   fun findById(id: ObjectId): Project?
 
-  fun findAllPaged(pageNumber: Int, filterPrivate: Boolean): Page<Project>
+  fun findAllPaged(
+    pageNumber: Int,
+    projectStatus: ProjectStatus?,
+    projectVisibility: ProjectVisibility?,
+    filterPrivate: Boolean
+  ): Page<Project>
 
   fun update(project: Project): Long
 
