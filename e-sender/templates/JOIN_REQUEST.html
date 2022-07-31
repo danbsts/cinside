@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+        color: #1c1e21;
+        line-height: 1.5;
+        background-color: #EEE;
+      }
+      .content {
+        margin: auto;
+        max-width: 700px;
+        background-color: #FEFEFE;
+      }
+      .logo-box {
+        display: flex;
+        justify-content: center;
+        background: #235BFF;
+        padding: 100px;
+        margin-bottom: 20px;
+      }
+      p {
+        font-size: 16px;
+        margin: 0;
+      }
+      strong {
+        font-weight: bold;
+      }
+      .contributor-box {
+        line-height: 1.2;
+        border-left: 6px solid #235BFF;
+        padding-left: 8px;
+        margin: 12px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+        <div class="logo-box">
+          <img src="http://localhost/cinside.png" />
+        </div>
+        <p>Olá!</p>
+        <br />
+        <p>Você tem novas requisições para entrar no seu projeto {{PROJECT-NAME}}:</p>
+        {{CONTRIBUTOR-BOX}}
+        <p>Você pode entrar em contato caso ache que seria interessante para o aprendizado deles e também para o momento do seu projeto</p>
+        <p>Se você precisar de ajuda, não hesite em contatar nosso time!</p>
+
+        <br/>
+        <p>Atenciosamente,</p>
+        <p>Time do CInside</p>
+    </div>
+  </body>
+</html>

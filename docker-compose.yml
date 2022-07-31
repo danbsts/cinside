@@ -31,6 +31,14 @@ services:
       - ./web-app/public:/cinside/public
     ports:
       - 3000:3000
+  e-sender:
+    env_file:
+      - e-sender/prod.env
+    build:
+      context: e-sender
+    restart: always
+    depends_on:
+      - rabbitmq
   mongo:
     image: mongo
     restart: always

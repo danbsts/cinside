@@ -3,3 +3,4 @@ oauth/
 .idea/
 .DS_Store
 bin/
+prod.env

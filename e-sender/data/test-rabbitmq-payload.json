@@ -1,0 +1,14 @@
+{
+  "receiver": "seuarroba@cin.ufpe.br",
+	"type": "JOIN_REQUEST",
+	"project": "Dikastis",
+  "contributors": [
+    {
+      "name": "Daniel Bastos",
+      "email": "seuarroba@cin.ufpe.br",
+      "linkedin": "https://linkedin.com/in/dan-bastos",
+      "github": "https://github.com/danbsts",
+      "skills": ["Java", "Python", "CSS"]
+    }
+  ]  
+}
