@@ -36,7 +36,7 @@ function getStartDate(initialValues) {
   return new Date(startDate);
 }
 
-export default function ProjectForm({ initialValues, submit }) {
+export default function ProjectForm({ deleteOnClick, initialValues, submit }) {
   const startDate = format(getStartDate(initialValues), 'yyyy-MM-dd');
 
   const onSubmit = (values) => {
@@ -100,6 +100,15 @@ export default function ProjectForm({ initialValues, submit }) {
           <ProjectContributorsForm />
           <FlexLayout justifyContent="center">
             <DktButton negative href={cancelLink}>Cancel</DktButton>
+            {deleteOnClick && (
+            <DktButton
+              negative
+              style={buttonMarginStyle}
+              onClick={deleteOnClick}
+            >
+              Delete
+            </DktButton>
+            )}
             <DktButton submit style={buttonMarginStyle}>Save</DktButton>
           </FlexLayout>
         </FlexLayout>

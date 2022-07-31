@@ -11,7 +11,7 @@ export default function ProjectEditPage() {
   const { id } = useParams();
   const { data: project } = useQuery(`/projects/${id}`);
   const history = useHistory();
-  const mutation = useMutation(
+  const editProject = useMutation(
     (projectForm) => dikastisApi.put('/projects', projectForm),
     {
       onSuccess: () => {
@@ -19,8 +19,29 @@ export default function ProjectEditPage() {
       },
     },
   );
+  const deleteProject = useMutation(
+    () => dikastisApi.delete(`/projects/${id}`),
+    {
+      onSuccess: () => {
+        history.push('/projects');
+      },
+    },
+  );
 
-  const submit = (form) => mutation.mutate({ id, ...form });
+  const submit = (form) => editProject.mutate({ id, ...form });
 
-  return <ProjectForm initialValues={project} submit={submit} />;
+  const deleteProjectOnClick = () => {
+    // eslint-disable-next-line no-restricted-globals, no-alert
+    if (confirm('Are you sure you want to delete?')) {
+      deleteProject.mutate();
+    }
+  };
+
+  return (
+    <ProjectForm
+      deleteOnClick={deleteProjectOnClick}
+      initialValues={project}
+      submit={submit}
+    />
+  );
 }
