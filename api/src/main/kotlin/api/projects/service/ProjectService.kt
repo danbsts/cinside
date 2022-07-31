@@ -16,5 +16,5 @@ interface ProjectService {
 
   fun delete(id: ObjectId): Long
 
-  fun sendJoinRequest(objectId: ObjectId)
+  fun sendJoinRequest(id: ObjectId)
 }

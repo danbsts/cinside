@@ -87,8 +87,16 @@ class MongoDbProjectRepository(
   }
 
   override fun addJoinRequest(id: ObjectId, joinRequest: JoinRequest): Long {
+    return addJoinRequestToField(id, "joinRequests", joinRequest)
+  }
+
+  override fun addUnNotifiedJoinRequest(id: ObjectId, joinRequest: JoinRequest): Long {
+    return addJoinRequestToField(id, "notifyJoinRequests", joinRequest)
+  }
+
+  private fun addJoinRequestToField(id: ObjectId, fieldName: String, joinRequest: JoinRequest): Long {
     val filter = Filters.eq("_id", id)
-    val update = Updates.push("joinRequests", joinRequest)
+    val update = Updates.push(fieldName, joinRequest)
     val result = collection.updateOne(filter, update)
     return result.modifiedCount
   }

@@ -121,10 +121,15 @@ class ProjectServiceImpl(
     return projectRepository.update(replaceable)
   }
 
-  override fun sendJoinRequest(objectId: ObjectId) {
+  override fun sendJoinRequest(id: ObjectId) {
     val username = customAuthentication.getUserName()
+    val project = projectRepository.findById(id)
+    if (project?.joinRequests?.find { it.username == username } != null) {
+      return
+    }
     val joinRequest = JoinRequest(username)
-    projectRepository.addJoinRequest(objectId, joinRequest)
+    projectRepository.addJoinRequest(id, joinRequest)
+    projectRepository.addUnNotifiedJoinRequest(id, joinRequest)
   }
 
   override fun delete(id: ObjectId): Long {

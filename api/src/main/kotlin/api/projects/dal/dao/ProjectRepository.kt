@@ -20,4 +20,6 @@ interface ProjectRepository {
   fun delete(id: ObjectId): Long
 
   fun addJoinRequest(id: ObjectId, joinRequest: JoinRequest): Long
+
+  fun addUnNotifiedJoinRequest(id: ObjectId, joinRequest: JoinRequest): Long
 }

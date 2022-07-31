@@ -40,4 +40,6 @@ data class Project @Creator @BsonCreator constructor(
   @param:BsonProperty("creationDate") val registrationDate: LocalDateTime = LocalDateTime.now(),
   @field:BsonProperty("joinRequests")
   @param:BsonProperty("joinRequests") val joinRequests: List<JoinRequest>? = listOf(),
+  @field:BsonProperty("notifyJoinRequests")
+  @param:BsonProperty("notifyJoinRequests") val notifyJoinRequests: List<JoinRequest>? = listOf(),
 )
