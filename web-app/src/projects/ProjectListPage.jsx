@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import { Form, Formik } from 'formik';
 import { css } from '@emotion/css';
+import { useHistory } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useQueryParams } from 'router/useDikastisRouting';
 
@@ -13,6 +14,7 @@ import { Path } from 'router/routing';
 import DktButton from 'shared/DktButton';
 import DktFormField from 'shared/form/DktFormField';
 import FlexLayout from 'shared/FlexLayout';
+import PaginationBox from 'shared/PaginationBox';
 import ProjectBox from 'projects/ProjectBox';
 
 const searchContainerStyle = css`
@@ -43,11 +45,21 @@ function getFilters(visibility, status, page) {
 }
 
 function ProjectList({ values }) {
+  const { page: qPage, status: qStatus, visibility: qVisibility } = useQueryParams();
+  const history = useHistory();
   const { page, status, visibility } = values;
   const { data } = useQuery(`/projects?${getFilters(visibility, status, page)}`);
-  const { content, empty } = data;
+  const {
+    content, empty, pageNumber, totalPages,
+  } = data;
 
   useEffect(() => { document.title = 'All projects'; }, []);
+
+  useEffect(() => {
+    if (page !== qPage || qStatus !== status || qVisibility !== visibility) {
+      history.push(`/projects?visibility=${visibility}&status=${status}&page=${page}`);
+    }
+  }, [values]);
 
   return (
     <Form>
@@ -67,6 +79,7 @@ function ProjectList({ values }) {
         <DktButton negative href={Path.PROJECTS_NEW} style={addButtonStyle}>Add project</DktButton>
       </FlexLayout>
       {!empty && content.map((project) => <ProjectBox key={project.id} project={project} />)}
+      <PaginationBox currentPage={pageNumber} totalPages={totalPages} />
     </Form>
   );
 }
