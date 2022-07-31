@@ -13,10 +13,10 @@ func getContributorBoxes(contributors []Contributor) string {
 
 	for _, contributor := range contributors {
 		parsedContributor := strings.ReplaceAll(string(contributorBox), "{{LINKEDIN}}", contributor.Linkedin)
-		parsedContributor = strings.ReplaceAll(parsedContributor, "{{NAME}}", contributor.Name)
+		parsedContributor = strings.ReplaceAll(parsedContributor, "{{NAME}}", contributor.DisplayName)
 		parsedContributor = strings.ReplaceAll(parsedContributor, "{{EMAIL}}", contributor.Email)
 		parsedContributor = strings.ReplaceAll(parsedContributor, "{{GITHUB}}", contributor.Github)
-		parsedContributor = strings.ReplaceAll(parsedContributor, "{{SKILLS}}", strings.Join(contributor.Skills, ", "))
+		parsedContributor = strings.ReplaceAll(parsedContributor, "{{SKILLS}}", contributor.Skills)
 		parsedContributors = append(parsedContributors, parsedContributor)
 	}
 	return strings.Join(parsedContributors, "\n")

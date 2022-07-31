@@ -7,6 +7,7 @@ import api.projects.dal.model.Project
 import api.projects.dto.ProjectVisibility
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
+import com.mongodb.client.MongoCursor
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Sorts
 import com.mongodb.client.model.Updates
@@ -99,5 +100,20 @@ class MongoDbProjectRepository(
     val update = Updates.push(fieldName, joinRequest)
     val result = collection.updateOne(filter, update)
     return result.modifiedCount
+  }
+
+  override fun findAllWithPendingJoinRequests(): List<Project> {
+    val filters = Filters.ne("notifyJoinRequests", null)
+    val cursor = collection.find(filters).cursor()
+
+    val result = ArrayList<Project>()
+    while (cursor.hasNext()) result.add(cursor.next())
+    return result
+  }
+
+  override fun removeNotifiableJoinRequests(id: ObjectId): Long {
+    val filter = Filters.eq("_id", id)
+    val update = Updates.unset("notifyJoinRequests")
+    return collection.updateOne(filter, update).modifiedCount
   }
 }

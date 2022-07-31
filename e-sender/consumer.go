@@ -7,11 +7,11 @@ import (
 )
 
 type Contributor struct {
-	Name     string
-	Email    string
-	Linkedin string
-	Github   string
-	Skills   []string
+	DisplayName string
+	Email       string
+	Linkedin    string
+	Github      string
+	Skills      string
 }
 
 type EmailRequest struct {

@@ -2,6 +2,7 @@ package api.projects.dal.dao
 
 import api.projects.dal.model.JoinRequest
 import api.projects.dal.model.Project
+import com.mongodb.client.MongoCursor
 import io.micronaut.data.model.Page
 import org.bson.types.ObjectId
 
@@ -22,4 +23,8 @@ interface ProjectRepository {
   fun addJoinRequest(id: ObjectId, joinRequest: JoinRequest): Long
 
   fun addUnNotifiedJoinRequest(id: ObjectId, joinRequest: JoinRequest): Long
+
+  fun findAllWithPendingJoinRequests(): List<Project>
+
+  fun removeNotifiableJoinRequests(id: ObjectId): Long
 }

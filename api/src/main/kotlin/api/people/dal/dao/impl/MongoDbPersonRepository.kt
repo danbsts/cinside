@@ -43,6 +43,16 @@ class MongoDbPersonRepository(
     return collection.find(filter).first()
   }
 
+  override fun findAllByUsernames(usernames: List<String>): List<Person> {
+    val filter = Filters.`in`("username", usernames)
+    val cursor = collection.find(filter).cursor()
+    val result = ArrayList<Person>()
+    while(cursor.hasNext()) {
+      result.add(cursor.next())
+    }
+    return result
+  }
+
   override fun update(person: Person): Long {
     val filter = Filters.eq("email", person.email)
     val result = collection.replaceOne(filter, person)
