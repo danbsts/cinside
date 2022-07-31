@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Form, Formik } from 'formik';
 import { useMutation, useQuery } from 'react-query';
@@ -42,6 +42,8 @@ function ProfileField({ title, value }) {
 }
 
 function ProfileForm({ email, fullName }) {
+  useEffect(() => { document.title = 'Edit profile'; });
+
   return (
     <div className={containerStyle}>
       <DktText holder="h2">Edit your information</DktText>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { css } from '@emotion/css';
 import { useQuery } from 'react-query';
@@ -42,6 +42,8 @@ export default function ProfilePage() {
     linkedin,
     skills,
   } = profile;
+
+  useEffect(() => { document.title = 'Profile'; }, []);
 
   return (
     <div className={containerStyle}>

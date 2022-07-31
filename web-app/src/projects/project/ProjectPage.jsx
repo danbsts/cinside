@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { css } from '@emotion/css';
 import format from 'date-fns/format';
@@ -69,6 +69,8 @@ export default function ProjectPage() {
     contributors, description, images, isFounder, repository,
     stack, startDate, status, title, url, visibility,
   } = project;
+
+  useEffect(() => { document.title = title; }, []);
 
   return (
     <FlexLayout flexDirection="column" style={pageStyle}>

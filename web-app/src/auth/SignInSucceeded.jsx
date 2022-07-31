@@ -13,6 +13,7 @@ export default function SignInSucceeded() {
   const { loginSucceeded } = useAuth();
 
   useEffect(() => {
+    document.title = 'Welcome!';
     loginSucceeded();
     setTimeout(() => history.replace(Path.PROJECTS), 3000);
   }, []);

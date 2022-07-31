@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import { useMutation } from 'react-query';
@@ -18,6 +18,8 @@ export default function ProjectCreationPage() {
       },
     },
   );
+
+  useEffect(() => { document.title = 'New project'; }, []);
 
   return <ProjectForm submit={mutation.mutate} />;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import * as yup from 'yup';
 import { Form, Formik } from 'formik';
@@ -86,6 +86,8 @@ function SignUpForm({ children }) {
 }
 
 export default function SignUp() {
+  useEffect(() => { document.title = 'Sign Up'; }, []);
+
   return (
     <GeneralPage>
       <FlexLayout flexDirection="column" justifyContent="center" style={containerStyle}>

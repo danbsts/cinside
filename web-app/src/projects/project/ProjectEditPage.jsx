@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
@@ -36,6 +36,8 @@ export default function ProjectEditPage() {
       deleteProject.mutate();
     }
   };
+
+  useEffect(() => { document.title = `Edit: ${project.title}`; }, []);
 
   return (
     <ProjectForm

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Form, Formik } from 'formik';
 import { css } from '@emotion/css';
@@ -32,6 +32,8 @@ function ProjectList({ values }) {
   const { page, status, visibility } = values;
   const { data } = useQuery(`/projects?visibility=${ProjectVisibilityToKey(visibility)}&status=${ProjectStatusToKey(status)}&page=${page}`);
   const { content } = data;
+
+  useEffect(() => { document.title = 'All projects'; }, []);
 
   return (
     <Form>

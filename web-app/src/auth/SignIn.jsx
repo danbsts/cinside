@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { css } from '@emotion/css';
 
@@ -13,6 +13,8 @@ const buttonStyle = css`
 
 export default function SignIn() {
   const { login } = useAuth();
+
+  useEffect(() => { document.title = 'Sign In'; }, []);
 
   return (
     <GeneralPage>
