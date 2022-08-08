@@ -41,6 +41,18 @@ const descriptionStyle = css`
   margin-top: 12px;
 `;
 
+function getShortDescription(description) {
+  const descriptionWords = description.split(' ');
+  let wordCount = 0;
+  return `${descriptionWords.reduce((acc, cur) => {
+    if (wordCount + cur.length <= 300) {
+      acc.push(cur);
+      wordCount += cur.length;
+    }
+    return acc;
+  }, []).join(' ')}...`;
+}
+
 export default function ProjectBox({ project }) {
   const {
     description, id, stack, startDate, status, title, visibility,
@@ -66,7 +78,7 @@ export default function ProjectBox({ project }) {
             <ProjectTag key={tech} style={stackTagStyle}>{tech}</ProjectTag>)
           ))}
         </FlexLayout>
-        <DktText holder="p" style={descriptionStyle}>{description}</DktText>
+        <DktText holder="p" style={descriptionStyle}>{getShortDescription(description)}</DktText>
       </Link>
     </div>
   );
