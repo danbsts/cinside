@@ -82,11 +82,17 @@ registerGroup(
   [
     Path.SIGN_IN_SUCCEEDED,
     Path.LOGOUT_SUCCEEDED,
-    Path.ROOT,
     Path.PROJECTS,
     Path.PROJECTS_NEW,
     Path.PROJECTS_PROJECT,
     Path.PROJECTS_PROJECT_EDIT,
+  ],
+);
+
+registerGroup(
+  Domain.CINSIDE,
+  [
+    Path.ROOT,
   ],
 );
 
