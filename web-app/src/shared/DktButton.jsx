@@ -13,11 +13,11 @@ const styleBase = css`
   padding: 10px 24px;
 `;
 const defaultStyle = css`
-  background-color: #172B4D;
+  background-color: #235BFF;
   border: none;
   color: #FFF;
   :hover {
-    background-color: #345285;
+    background-color: #3964e6;
   }
 `;
 const invisibleStyle = css`
@@ -32,7 +32,7 @@ const invisibleStyle = css`
 const negativeStyle = css`
   background-color: #FFF;
   border: 1px solid #172B4D;
-  color: #172B4D;
+  color: #1C1C1C;
   :hover {
     background-color: #EEE;
   }

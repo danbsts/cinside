@@ -37,8 +37,8 @@ const numberStyle = css`
   color: #909090;
 `;
 const selectedNumberStyle = css`
-  border-bottom: 1px solid #172B4D;
-  color: #172B4D;
+  border-bottom: 1px solid #235BFF;
+  color: #EEE;
 `;
 
 const addNumbers = (start, end, array) => {

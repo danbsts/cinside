@@ -42,7 +42,7 @@ const p = css`
 const formTitle = css`
   margin: 20px 0 8px;
   font-weight: 600;
-  color: #235BFF;
+  color: #EEE;
   :first-child {
     margin-right: 32px;
   }
