@@ -19,8 +19,7 @@ class ProjectTasks(
 ) {
   private val logger = LoggerFactory.getLogger(ProjectTasks::class.java)
 
-//  @Scheduled(cron = "9 0 * * *", zoneId = "America/Sao_Paulo")
-  @Scheduled(fixedDelay = "1m")
+  @Scheduled(fixedDelay = "6h")
   fun sendJoinRequests() {
     val notifiableProjects = projectRepository
       .findAllWithPendingJoinRequests()
