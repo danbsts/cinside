@@ -1,0 +1,44 @@
+version: '3'
+services:
+  api:
+    build: api
+    env_file:
+      - oauth/secret.env
+      - api/prod.env
+    restart: always
+    depends_on:
+      - mongo
+  nginx:
+    build: nginx/prd
+    restart: always
+    ports:
+      - 443:443
+      - 80:80
+  web-app:
+    build: 
+      context: web-app
+      dockerfile: Dockerfile.prd
+    restart: always
+  e-sender:
+    build: e-sender
+    env_file:
+      - e-sender/prod.env
+    restart: always
+    depends_on:
+      - rabbitmq
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    env_file:
+      - mongo/prod.env
+    volumes:
+      - mongo:/data/db
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+volumes:
+  mongo:
+  rabbitmq-data:
