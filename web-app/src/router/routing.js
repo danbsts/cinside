@@ -43,6 +43,7 @@ export const Path = Object.freeze({
   ORGANIZATION_TEAM_TASK_PERSON: '/organizations/:organizationId/:teamId/:taskId/:personId',
   PASSWORD_RECOVERY: '/password-recovery',
   PASSWORD_RECOVERY_REQUEST: '/recovery-request',
+  PRIVACY_POLICY: '/privacy',
   PROBLEMS: '/problems',
   PROBLEMS_MINE: '/problems/mine',
   PROBLEMS_NEW: '/problems/new',

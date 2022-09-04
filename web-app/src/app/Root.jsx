@@ -14,6 +14,7 @@ import AuthenticatedApp from 'app/AuthenticatedApp';
 import DktLoader from 'shared/DktLoader';
 import DktRouter from 'router/DktRouter';
 import LogoutSucceeded from 'auth/LogoutSucceeded';
+import PrivacyPolicy from 'legal/PrivacyPolicy';
 import StackErrorPage from 'shared/error/StackErrorPage';
 import UnauthenticatedApp from 'app/UnathenticatedApp';
 
@@ -30,12 +31,15 @@ function App() {
 
 function Root() {
   return (
-    <DktRouter>
-      {removeDupedForwardSlashes()}
-      {removeTrailingForwardSlash()}
-      <Route component={LogoutSucceeded} path={Path.LOGOUT_SUCCEEDED} />
-      <App />
-    </DktRouter>
+    <>
+      <DktRouter>
+        {removeDupedForwardSlashes()}
+        {removeTrailingForwardSlash()}
+        <Route component={LogoutSucceeded} path={Path.LOGOUT_SUCCEEDED} />
+        <Route component={PrivacyPolicy} path={Path.PRIVACY_POLICY} />
+        <App />
+      </DktRouter>
+    </>
   );
 }
 
