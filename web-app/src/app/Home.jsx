@@ -52,8 +52,7 @@ export default function Home() {
             the perfect project for you to develop your skills!
           </DktText>
           <FlexLayout justifyContent="center" style={signUpStyle}>
-            <DktButton negative href={Path.SIGN_IN} style={signInStyle}>Sign In</DktButton>
-            <DktButton href={Path.SIGN_UP}>Sign Up</DktButton>
+            <DktButton href={Path.SIGN_IN} style={signInStyle}>Sign In</DktButton>
           </FlexLayout>
         </div>
       </FlexLayout>
@@ -72,7 +71,7 @@ export default function Home() {
         </DktText>
         <img alt="Designing new idea" className={vdpImageStyle} src={designers} />
         <FlexLayout justifyContent="center">
-          <DktButton href={Path.SIGN_UP}>Sign Up</DktButton>
+          <DktButton href={Path.SIGN_IN}>Sign In</DktButton>
         </FlexLayout>
       </FlexLayout>
     </FlexLayout>
