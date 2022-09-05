@@ -15,7 +15,7 @@ function saveAuthData({ expiration }) {
 }
 
 function login(setAuthData) {
-  const expirationDate = addSeconds(new Date(), 3000);
+  const expirationDate = addSeconds(new Date(), 60 * 60 * 24);
   const authData = {
     expiration: expirationDate.toISOString(),
   };
