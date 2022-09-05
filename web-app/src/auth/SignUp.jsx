@@ -62,12 +62,12 @@ function SignUpForm({ children }) {
   const { addToast } = useToast();
   const { register } = useAuth();
   const history = useHistory();
-  const { email, name } = useQueryParams();
+  const { displayName, email, name } = useQueryParams();
 
   return (
     <Formik
       initialValues={{
-        displayName: '',
+        displayName: displayName ?? '',
         email: email ?? '',
         fullName: name ?? '',
         github: 'https://github.com/',
@@ -77,7 +77,7 @@ function SignUpForm({ children }) {
       validationSchema={validationSchema}
       onSubmit={(values) => register(values, () => {
         addToast(200, 'User created, please login :D');
-        history.push('/sign-in');
+        setTimeout(() => history.push('/sign-in'), 2000);
       })}
     >
       <Form className={cx(formStyle)}>{children}</Form>

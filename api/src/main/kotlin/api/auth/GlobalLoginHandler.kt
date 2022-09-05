@@ -40,7 +40,15 @@ class GlobalLoginHandler(
     val encodedEmail = URLEncoder.encode(authenticationFailed.email, "UTF-8")
     val encodedName = authenticationFailed.name?.let { URLEncoder.encode(it, "UTF-8") }
     val nameQuery = encodedName?.let { "&name=$it" } ?: ""
-    val location = URI("$loginFailure?email=$encodedEmail$nameQuery")
+    val displayNameQuery = authenticationFailed.name?.let {
+      val names = it.split(' ')
+      if (names.size < 2) {
+        return@let null
+      }
+      val displayName = URLEncoder.encode("${names[0]} ${names[1]}", "UTF-8")
+      return@let "&displayName=$displayName"
+    } ?: ""
+    val location = URI("$loginFailure?email=$encodedEmail$nameQuery$displayNameQuery")
     return HttpResponse.seeOther<Any>(location)
   }
 }
