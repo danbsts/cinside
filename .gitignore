@@ -4,3 +4,4 @@ oauth/
 .DS_Store
 bin/
 prod.env
+legal/
