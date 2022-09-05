@@ -7,6 +7,7 @@ import FlexLayout from 'shared/FlexLayout';
 
 const containerStyle = css`
   padding: 40px 28px;
+  box-sizing: border-box;
 `;
 const projectStyle = css`
   font-family: 'Source Sans Pro';
