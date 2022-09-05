@@ -13,6 +13,7 @@ import { removeDupedForwardSlashes, removeTrailingForwardSlash } from 'router/Re
 import AuthenticatedApp from 'app/AuthenticatedApp';
 import DktLoader from 'shared/DktLoader';
 import DktRouter from 'router/DktRouter';
+import Footer from 'app/Footer';
 import LogoutSucceeded from 'auth/LogoutSucceeded';
 import PrivacyPolicy from 'legal/PrivacyPolicy';
 import StackErrorPage from 'shared/error/StackErrorPage';
@@ -39,6 +40,7 @@ function Root() {
         <Route component={PrivacyPolicy} path={Path.PRIVACY_POLICY} />
         <App />
       </DktRouter>
+      <Footer />
     </>
   );
 }
