@@ -38,11 +38,15 @@ export default function ProjectStackForm() {
   const [{ value: stack }, , { setValue: setStack }] = useField('stack');
 
   const addStack = () => {
-    if (stack.includes(stackName)) {
-      setStackName('');
-      return;
-    }
-    setStack([...stack, stackName]);
+    const toAdd = [];
+    stackName.split(',').forEach((s) => {
+      if (stack.includes(s)) {
+        setStackName('');
+        return;
+      }
+      toAdd.push(s);
+    });
+    setStack([...stack, ...toAdd]);
     setStackName('');
   };
 
