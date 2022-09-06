@@ -74,6 +74,8 @@ export default function Home() {
           <DktButton href={Path.SIGN_IN}>Sign In</DktButton>
         </FlexLayout>
       </FlexLayout>
+      <a href="https://storyset.com/data">Illustrations by Storyset</a>
+      <br />
     </FlexLayout>
   );
 }
