@@ -11,6 +11,7 @@ const styleBase = css`
   border-radius: 5px;
   text-align: center;
   line-height: 25px;
+  margin: 4px 4px 0 0;
 `;
 const negativeStyle = css`
   background-color: #EEE;

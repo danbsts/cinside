@@ -34,9 +34,6 @@ const stackContainerStyle = css`
   margin-top: 12px;
   flex-wrap: wrap;
 `;
-const stackTagStyle = css`
-  margin-right: 4px;
-`;
 const descriptionStyle = css`
   margin-top: 12px;
 `;
@@ -75,7 +72,7 @@ export default function ProjectBox({ project }) {
         </FlexLayout>
         <FlexLayout style={stackContainerStyle}>
           {stack.map(((tech) => (
-            <ProjectTag key={tech} style={stackTagStyle}>{tech}</ProjectTag>)
+            <ProjectTag key={tech}>{tech}</ProjectTag>)
           ))}
         </FlexLayout>
         <DktText holder="p" style={descriptionStyle}>{getShortDescription(description)}</DktText>
