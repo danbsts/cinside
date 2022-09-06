@@ -67,7 +67,7 @@ export default function ProjectForm({ deleteOnClick, initialValues, submit }) {
         status: ProjectStatus.NEW_IDEA,
         title: '',
         url: '',
-        visibility: ProjectVisibility.PUBLIC,
+        visibility: ProjectVisibility.PRIVATE,
         ...initialValues,
         // eslint-disable-next-line sort-keys
         startDate,
