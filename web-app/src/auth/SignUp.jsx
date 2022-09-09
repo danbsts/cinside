@@ -45,7 +45,7 @@ const validationSchema = yup.object().shape({
   github: yup
     .string()
     .matches(
-      /^(http(s?):\/\/)?(www\.)?github\.([a-z])+\/([A-Za-z0-9]{1,})+\/?$/,
+      /^(http(s?):\/\/)?(www\.)?github\.([a-z])+\/([A-Za-z0-9-]{1,})+\/?$/,
       'Invalid Github URL',
     )
     .required('Is required'),

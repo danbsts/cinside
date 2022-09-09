@@ -47,7 +47,7 @@ class PersonServiceImpl(private val personRepository: PersonRepository) : Person
   }
 
   private fun urlsCheck(personDTO: PersonDTO) {
-    val githubRegex = "^(http(s?):\\/\\/)?(www\\.)?github\\.([a-z])+\\/([A-Za-z0-9]{1,})+\\/?\$".toRegex()
+    val githubRegex = "^(http(s?):\\/\\/)?(www\\.)?github\\.([a-z])+\\/([A-Za-z0-9-]{1,})+\\/?\$".toRegex()
     if (personDTO.github == null || !githubRegex.matches(personDTO.github)) {
       throw HttpStatusException(HttpStatus.BAD_REQUEST, "Bad Github: ${personDTO.github}")
     }
