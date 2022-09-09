@@ -54,6 +54,8 @@ function AuthProvider({ children }) {
     if (!expiration) return false;
     const expirationDate = new Date(expiration);
     const valid = isBefore(now, expirationDate);
+    dikastisApi.get('/people/logged-in')
+      .catch(({ response }) => { if (response.status === 401) logout(); });
     return valid;
   }, [expiration]);
   const hasToken = React.useCallback(() => (
