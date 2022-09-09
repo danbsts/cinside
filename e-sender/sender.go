@@ -22,13 +22,13 @@ func sendEmail(request *EmailRequest) {
 	failOnError(err, "Couldn't find subject")
 
 	msg := gomail.NewMessage()
-	msg.SetHeader("From", "CInside Team <no-reply-dikastis@cin.ufpe.br>")
+	msg.SetHeader("From", "Cinside Team <cinside@cin.ufpe.br>")
 	msg.SetHeader("To", request.Receiver)
 	msg.SetHeader("Subject", subject)
 	msg.SetBody("text/html", body)
 
 	password := os.Getenv("EMAIL_PASSWORD")
-	n := gomail.NewDialer("smtp.gmail.com", 587, "no-reply-dikastis@cin.ufpe.br", password)
+	n := gomail.NewDialer("smtp.gmail.com", 587, "cinside@cin.ufpe.br", password)
 
 	// Send the email
 	if err := n.DialAndSend(msg); err != nil {

@@ -39,7 +39,7 @@ function ContributorBox({ name, remove, role }) {
 export default function Contributors({ contributors, remove }) {
   return (
     <FlexLayout justifyContent="space-between" style={contributorsContainerStyle}>
-      {contributors.map(({ name, role }, idx) => (
+      {(contributors ?? []).map(({ name, role }, idx) => (
         // eslint-disable-next-line react/no-array-index-key
         <ContributorBox key={idx} name={name} remove={remove} role={role} />
       ))}
