@@ -122,10 +122,7 @@ class MongoDbProjectRepository(
   }
 
   override fun findAllWithPendingJoinRequests(): List<Project> {
-    val filters = Filters.or(
-      Filters.ne("notifyJoinRequests", null),
-      Filters.ne("notifyJoinRequests", "[]")
-    )
+    val filters = Filters.ne("notifyJoinRequests", null)
     val cursor = collection.find(filters).cursor()
 
     val result = ArrayList<Project>()
