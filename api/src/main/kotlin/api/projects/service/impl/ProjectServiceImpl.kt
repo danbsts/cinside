@@ -10,6 +10,7 @@ import api.projects.dto.ProjectDTO
 import api.projects.dto.ProjectStatus
 import api.projects.dto.ProjectVisibility
 import api.projects.mapper.ProjectMapper
+import api.projects.service.ProjectAnalyticsService
 import api.projects.service.ProjectService
 import io.micronaut.data.model.Page
 import io.micronaut.http.HttpStatus
@@ -23,6 +24,7 @@ class ProjectServiceImpl(
   private val projectRepository: ProjectRepository,
   private val customAuthentication: CustomAuthentication,
   private val projectMapper: ProjectMapper,
+  private val projectAnalyticsService: ProjectAnalyticsService
 ) : ProjectService {
 
   override fun register(projectDTO: ProjectDTO): ObjectId? {
@@ -72,6 +74,7 @@ class ProjectServiceImpl(
     val project = projectRepository.findById(id)
       ?: throw HttpStatusException(HttpStatus.NOT_FOUND, "Project $id not registered")
 
+    projectAnalyticsService.addPreviewToProject(id)
     return projectMapper.projectToDTO(project)
   }
 

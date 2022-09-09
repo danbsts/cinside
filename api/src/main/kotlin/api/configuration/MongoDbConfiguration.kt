@@ -9,4 +9,6 @@ interface MongoDbConfiguration : Named {
   val personCollection: String
 
   val projectCollection: String
+
+  val projectAnalyticsCollection: String
 }
