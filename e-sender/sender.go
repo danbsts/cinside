@@ -16,14 +16,13 @@ func getEmailSubject(emailType string) (string, error) {
 	}
 }
 
-func sendEmail(request *EmailRequest) {
-	body := getEmailBody(request.Type, request.Contributors, request.Project)
-	subject, err := getEmailSubject(request.Type)
+func sendEmail(receiver string, emailType string, body string) error {
+	subject, err := getEmailSubject(emailType)
 	failOnError(err, "Couldn't find subject")
 
 	msg := gomail.NewMessage()
 	msg.SetHeader("From", "Cinside Team <cinside@cin.ufpe.br>")
-	msg.SetHeader("To", request.Receiver)
+	msg.SetHeader("To", receiver)
 	msg.SetHeader("Subject", subject)
 	msg.SetBody("text/html", body)
 
@@ -31,7 +30,5 @@ func sendEmail(request *EmailRequest) {
 	n := gomail.NewDialer("smtp.gmail.com", 587, "cinside@cin.ufpe.br", password)
 
 	// Send the email
-	if err := n.DialAndSend(msg); err != nil {
-		panic(err)
-	}
+	return n.DialAndSend(msg)
 }

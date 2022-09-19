@@ -33,7 +33,7 @@ func listenForEmails(connection *Connection) {
 	msgs, err := channel.Consume(
 		queue.Name, // queue
 		"test-go",  // consumer
-		true,       // auto-ack
+		false,      // auto-ack
 		false,      // exclusive
 		false,      // no-local
 		false,      // no-wait
@@ -47,7 +47,15 @@ func listenForEmails(connection *Connection) {
 			err := json.Unmarshal(d.Body, sendRequest)
 			failOnError(err, "Error decoding JSON: %s")
 
-			sendEmail(sendRequest)
+			log.Printf("Sending email to: %s\n", sendRequest.Receiver)
+			body := getEmailBody(sendRequest.Type, sendRequest.Contributors, sendRequest.Project)
+			if err := sendEmail(sendRequest.Receiver, sendRequest.Type, body); err != nil {
+				channel.Nack(d.DeliveryTag, false, true)
+				log.Printf("%s Failed to send email\n", d.Timestamp)
+			} else {
+				channel.Ack(d.DeliveryTag, false)
+				log.Printf("Email sent!\n")
+			}
 		}
 	}()
 

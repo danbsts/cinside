@@ -21,8 +21,8 @@ class ProjectAnalyticsServiceImpl(
     val lastUserPreview = projectAnalytics.projectPreviews
       .filter { it.username == username }.maxByOrNull { it.time }
 
-    val fourHoursAgo = LocalDateTime.now().minusHours(1L)
-    if (lastUserPreview == null || lastUserPreview.time.isBefore(fourHoursAgo)) {
+    val oneHourAgo = LocalDateTime.now().minusHours(1L)
+    if (lastUserPreview == null || lastUserPreview.time.isBefore(oneHourAgo)) {
       projectAnalyticsRepository.addProjectPreview(projectAnalytics.id!!, username)
     }
   }

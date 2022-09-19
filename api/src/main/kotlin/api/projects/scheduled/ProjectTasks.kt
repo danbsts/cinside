@@ -44,6 +44,18 @@ class ProjectTasks(
     }
   }
 
+  @Scheduled(fixedDelay = "12h")
+  fun sendSampleJoinRequest() {
+    // TODO - remove method when consistent email retry implemented
+    val event = JoinRequestEmailEvent(
+      "cinside@cin.ufpe.br",
+      EmailType.JOIN_REQUEST,
+      "Cinside",
+      listOf()
+    )
+    emailEventClient.sendJoinRequestEmailEvent(event)
+  }
+
   private fun parseNewContributors(newJoiners: List<Person>): List<PersonDTO> {
     return newJoiners.map {
       PersonDTO(
