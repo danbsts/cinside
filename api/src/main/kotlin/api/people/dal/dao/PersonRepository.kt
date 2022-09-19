@@ -17,4 +17,7 @@ interface PersonRepository {
   fun update(person: Person): Long
 
   fun updateUsername(email: String, username: String): Long
+
+  fun registerLogIn(email: String): Long
+
 }

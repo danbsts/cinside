@@ -5,3 +5,4 @@ oauth/
 bin/
 prod.env
 legal/
+data/

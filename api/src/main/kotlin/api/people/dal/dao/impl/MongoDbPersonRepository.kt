@@ -3,11 +3,13 @@ package api.people.dal.dao.impl
 import api.configuration.MongoDbConfiguration
 import api.people.dal.dao.PersonRepository
 import api.people.dal.model.Person
+import api.projects.dal.model.ProjectPreview
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Updates
 import jakarta.inject.Singleton
+import java.time.LocalDateTime
 
 @Singleton
 class MongoDbPersonRepository(
@@ -51,6 +53,13 @@ class MongoDbPersonRepository(
       result.add(cursor.next())
     }
     return result
+  }
+
+  override fun registerLogIn(email: String): Long {
+    val filter = Filters.eq("email", email)
+    val update = Updates.push("logInLog", LocalDateTime.now())
+    val result = collection.updateOne(filter, update)
+    return result.modifiedCount
   }
 
   override fun update(person: Person): Long {

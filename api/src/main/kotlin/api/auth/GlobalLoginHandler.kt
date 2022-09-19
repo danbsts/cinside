@@ -1,6 +1,7 @@
 package api.auth
 
 import api.auth.failures.AccountNotRegisteredResponse
+import api.people.service.PersonService
 import io.micronaut.context.annotation.Replaces
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
@@ -21,9 +22,19 @@ import java.net.URLEncoder
 class GlobalLoginHandler(
   accessTokenCookieConfiguration: AccessTokenCookieConfiguration?,
   redirectConfiguration: RedirectConfiguration?,
-  priorToLoginPersistence: PriorToLoginPersistence?
+  priorToLoginPersistence: PriorToLoginPersistence?,
+  private val personService: PersonService
 ) : IdTokenLoginHandler(accessTokenCookieConfiguration, redirectConfiguration, priorToLoginPersistence) {
 
+  override fun loginSuccess(authentication: Authentication?, request: HttpRequest<*>?): MutableHttpResponse<*> {
+    val log = LoggerFactory.getLogger(this::class.java)
+    log.info(authentication.toString())
+    log.info(authentication?.let {it.attributes["email"].toString() })
+    authentication?.let {
+      personService.registerLogIn(it.attributes["email"]?.toString())
+    }
+    return super.loginSuccess(authentication, request)
+  }
   override fun loginFailed(
     authenticationFailed: AuthenticationResponse,
     request: HttpRequest<*>?

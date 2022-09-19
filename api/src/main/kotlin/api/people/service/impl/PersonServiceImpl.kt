@@ -95,4 +95,8 @@ class PersonServiceImpl(private val personRepository: PersonRepository) : Person
     return personRepository.update(replaceable)
   }
 
+  override fun registerLogIn(email: String?) {
+    email?.let { personRepository.registerLogIn(email) }
+  }
+
 }

@@ -11,4 +11,6 @@ interface PersonService {
   fun find(email: String): PersonDTO
 
   fun update(email: String, personDTO: PersonDTO): Long
+
+  fun registerLogIn(email: String?)
 }
