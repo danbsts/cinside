@@ -15,7 +15,7 @@ export default function SignInSucceeded() {
   useEffect(() => {
     document.title = 'Welcome!';
     loginSucceeded();
-    setTimeout(() => history.replace(Path.PROJECTS), 3000);
+    history.replace(Path.PROJECTS);
   }, []);
 
   return (

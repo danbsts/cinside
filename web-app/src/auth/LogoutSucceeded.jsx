@@ -14,7 +14,7 @@ export default function LogoutSucceeded() {
 
   useEffect(() => {
     logout();
-    setTimeout(() => history.replace(Path.SIGN_IN), 3000);
+    history.replace(Path.SIGN_IN);
   }, []);
 
   return (
