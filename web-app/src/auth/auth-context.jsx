@@ -25,7 +25,7 @@ function AuthProvider({ children }) {
   );
   const loginSucceeded = React.useCallback(
     () => {
-      setTimeout(() => auth.login(setAuthData), 3000);
+      auth.login(setAuthData);
     },
     [setAuthData],
   );
