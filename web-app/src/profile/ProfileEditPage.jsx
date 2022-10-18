@@ -78,10 +78,13 @@ export default function ProfileEditPage() {
       onSuccess: () => {
         history.push('/profile');
       },
+      onError: (e) => {
+        alert(e);
+      }
     },
   );
 
-  return (
+  return (<>
     <Formik
       initialValues={{
         displayName,
@@ -95,5 +98,17 @@ export default function ProfileEditPage() {
         <ProfileForm email={email} fullName={fullName} />
       </Form>
     </Formik>
+    <form>
+      <label htmlFor="displayName">Display Name</label>
+      <input type="text" id="displayName"/>
+      <label htmlFor="linkedin">Linkedin</label>
+      <input type="url" id="linkedin"/>
+      <label htmlFor="github">Github</label>
+      <input type="url" id="github"/>
+      <label htmlFor="skills">Skills</label>
+      <input type="text" />
+    </form>
+  </>
+
   );
 }
