@@ -29,6 +29,13 @@ function AuthProvider({ children }) {
     },
     [setAuthData],
   );
+  const loginWithCredentials = React.useCallback(
+    async (email, password) => {
+      const { authData } = await auth.loginWithCredentials(email, password);
+      setAuthData(authData);
+    },
+    [setAuthData],
+  );
   const register = React.useCallback(
     (form, doneFn) => {
       auth.register(form)
@@ -78,9 +85,27 @@ function AuthProvider({ children }) {
 
   const value = React.useMemo(
     () => ({
-      fetchUser, hasToken, isLoggedIn, login, loginSucceeded, logout, register, user,
+      fetchUser,
+      hasToken,
+      isLoggedIn,
+      login,
+      loginSucceeded,
+      loginWithCredentials,
+      logout,
+      register,
+      user,
     }),
-    [hasToken, fetchUser, isLoggedIn, login, loginSucceeded, logout, register, user],
+    [
+      hasToken,
+      fetchUser,
+      isLoggedIn,
+      login,
+      loginSucceeded,
+      loginWithCredentials,
+      logout,
+      register,
+      user,
+    ],
   );
 
   return (

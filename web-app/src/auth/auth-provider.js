@@ -23,6 +23,19 @@ function login(setAuthData) {
   setAuthData(authData);
 }
 
+async function loginWithCredentials(email, password) {
+  const response = await dikastisApi.post('/login', {
+    password,
+    username: email,
+  });
+  const expirationDate = addSeconds(new Date(), 60 * 60 * 24);
+  const authData = {
+    expiration: expirationDate.toISOString(),
+  };
+  saveAuthData(authData);
+  return { authData, response: response.data };
+}
+
 function register(form) {
   return dikastisApi.post('/people', form);
 }
@@ -34,6 +47,7 @@ function logout() {
 export {
   getAuthData,
   login,
+  loginWithCredentials,
   logout,
   register,
 };
