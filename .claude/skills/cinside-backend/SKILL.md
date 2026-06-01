@@ -5,13 +5,21 @@ description: Backend development conventions for the Kotlin API with MongoDB as 
 
 # Architecture
 
+## Login
+
+- There are two ways of logging in, on local development we can use the email and password and for production users can use OAuth to login with Google
+- If the user is registered with google they should provide extra information when updating their accounts (only available in production)
+- If the user is registered by our sign up form they should provide their full information before logging in (only available in dev environment)
+- The login endpoints should return JWT tokens to be used across the different endpoints and website
+- The two different auth modes (dev & prod) are switched using "@Requires" and checking for the micronaut.security.authentication property value
+
 ## Controllers
 
 - Controller classes should be named after the resource they control
 - They should be responsible for checking the permissions of the user and returning `HttpResponse.notFound()`if the operation is not allowed. The permissions class should be used in this case
 - Every endpoint should have your own POJO that maps the request body to a Kotlin object. Two endpoints with the same request format could share the same POJO
 - The naming convention for the request POJO should follow `{endpoint}RequestDTO`
-- All endpoints should return an DTO object for the entity
+- All endpoints should return a DTO object for the entity
 - Validation against the request objects should be done on this layer
 - The location of the files should be in the `controller` folder
 
@@ -48,3 +56,10 @@ description: Backend development conventions for the Kotlin API with MongoDB as 
 - Reflection testing should be avoided at max
 - For testing the controller, it should assert that the correct fields were populated and the names are correct
 - Use mocks to create missing pieces of components and make sure they return the correct values when their function is called
+
+# Infrastructure
+
+## Docker
+
+- When testing the API, it references two different docker compose files to define if it's a production or dev environment
+- The different docker compose should load different configuration files that will help the apps be configured properly
