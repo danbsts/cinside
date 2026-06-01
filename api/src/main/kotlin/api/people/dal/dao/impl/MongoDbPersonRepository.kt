@@ -45,6 +45,14 @@ class MongoDbPersonRepository(
     return collection.find(filter).first()
   }
 
+  override fun findByEmailAndPassword(email: String, password: String): Person? {
+    val filter = Filters.and(
+      Filters.eq("email", email),
+      Filters.eq("password", password)
+    )
+    return collection.find(filter).first()
+  }
+
   override fun findAllByUsernames(usernames: List<String>): List<Person> {
     val filter = Filters.`in`("username", usernames)
     val cursor = collection.find(filter).cursor()

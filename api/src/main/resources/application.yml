@@ -16,6 +16,9 @@ micronaut:
       login-uri: "/api/oauth/login{/provider}"
       callback-uri: "/api/oauth/callback{/provider}"
     endpoints:
+      login:
+        enabled: true
+        path: "/api/login"
       logout:
         get-allowed: true
         path: "/api/logout"

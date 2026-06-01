@@ -1,2 +1,2 @@
-FROM rookiezoe/nginx:1.20.2
+FROM public.ecr.aws/docker/library/nginx:1.20
 COPY . .

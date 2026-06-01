@@ -40,7 +40,7 @@ services:
     depends_on:
       - rabbitmq
   mongo:
-    image: mongo
+    image: public.ecr.aws/docker/library/mongo
     restart: always
     ports:
       - 27017:27017
@@ -50,7 +50,7 @@ services:
     volumes:
       - mongo:/data/db
   rabbitmq:
-    image: rabbitmq:3.8-management-alpine
+    image: public.ecr.aws/docker/library/rabbitmq:3.8-management-alpine
     ports:
       - 15672:15672
       - 5672:5672

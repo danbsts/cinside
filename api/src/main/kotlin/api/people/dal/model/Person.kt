@@ -15,6 +15,7 @@ data class Person @Creator @BsonCreator constructor(
   @field:BsonProperty("github") @param:BsonProperty("github") var github: String,
   @field:BsonProperty("linkedin") @param:BsonProperty("linkedin") var linkedin: String,
   @field:BsonProperty("skills") @param:BsonProperty("skills") var skills: String,
+  @field:BsonProperty("password") @param:BsonProperty("password") val password: String? = null,
   @field:BsonProperty("_id") @param:BsonProperty("_id") val id: ObjectId? = null,
   @field:BsonProperty("creationDate") @param:BsonProperty("creationDate") val creationDate: LocalDateTime =
     LocalDateTime.now(),

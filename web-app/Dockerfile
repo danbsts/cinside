@@ -1,4 +1,4 @@
-FROM node:14.5-alpine
+FROM public.ecr.aws/docker/library/node:14-alpine
 WORKDIR /cinside
 COPY package.json yarn.lock ./
 RUN yarn

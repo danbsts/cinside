@@ -12,6 +12,8 @@ interface PersonRepository {
 
   fun findByUsername(username: String): Person?
 
+  fun findByEmailAndPassword(email: String, password: String): Person?
+
   fun findAllByUsernames(usernames: List<String>): List<Person>
 
   fun update(person: Person): Long
