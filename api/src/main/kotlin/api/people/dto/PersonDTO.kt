@@ -6,5 +6,6 @@ class PersonDTO(
   val email: String? = null,
   val linkedin: String? = null,
   val github: String? = null,
-  val skills: String? = null
+  val skills: String? = null,
+  val password: String? = null
 )

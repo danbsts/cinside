@@ -3,6 +3,7 @@ package api.auth
 import api.auth.failures.AccountNotRegisteredResponse
 import api.people.service.PersonService
 import io.micronaut.context.annotation.Replaces
+import io.micronaut.context.annotation.Requires
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MutableHttpResponse
@@ -18,6 +19,7 @@ import java.net.URI
 import java.net.URLEncoder
 
 @Singleton
+@Requires(property = "micronaut.security.authentication", value = "idtoken")
 @Replaces(IdTokenLoginHandler::class)
 class GlobalLoginHandler(
   accessTokenCookieConfiguration: AccessTokenCookieConfiguration?,

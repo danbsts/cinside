@@ -5,8 +5,9 @@ micronaut:
     cors:
       enabled: true
   security:
-    authentication: idtoken
+    authentication: ${AUTH_MODE:bearer}
     oauth2:
+      enabled: ${OAUTH_ENABLED:false}
       clients:
         google:
           client-id: ${OAUTH_CLIENT_ID:xxx}
@@ -30,6 +31,11 @@ micronaut:
       jwt:
         claims-validators:
           expiration: false
+        signatures:
+          secret:
+            generator:
+              secret: ${JWT_SECRET:pleaseChangeThisSecretForAProductionEnvironmentThatIsAtLeast256bits}
+              jws-algorithm: HS256
 netty:
   default:
     allocator:

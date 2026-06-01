@@ -56,6 +56,9 @@ const validationSchema = yup.object().shape({
       'Invalid LinkedIn URL',
     )
     .required('Is required'),
+  password: yup.string()
+    .min(6, 'At least 6 characters')
+    .required('Is required'),
 });
 
 function SignUpForm({ children }) {
@@ -72,6 +75,7 @@ function SignUpForm({ children }) {
         fullName: name ?? '',
         github: 'https://github.com/',
         linkedin: 'https://linkedin.com/in/',
+        password: '',
         skills: '',
       }}
       validationSchema={validationSchema}
@@ -95,6 +99,7 @@ export default function SignUp() {
           <DktFormField fieldStyle={fieldStyle} name="fullName" placeholder="Your full name" title="Full Name" />
           <DktFormField fieldStyle={fieldStyle} name="displayName" placeholder="Name Surname" title="Preferred name" />
           <DktFormField fieldStyle={fieldStyle} name="email" placeholder="Your e-mail address" title="Email" type="email" />
+          <DktFormField fieldStyle={fieldStyle} name="password" placeholder="Choose a password" title="Password" type="password" />
           <DktFormField fieldStyle={fieldStyle} name="linkedin" placeholder="https://linkedin.com/in/username" title="Linkedin" />
           <DktFormField fieldStyle={fieldStyle} name="github" placeholder="https://github.com/username" title="Github" />
           <DktFormField fieldStyle={fieldStyle} name="skills" placeholder="Javascript, React, Java" title="Skills" />

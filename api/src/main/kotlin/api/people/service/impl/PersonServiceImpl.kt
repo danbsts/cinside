@@ -32,7 +32,8 @@ class PersonServiceImpl(private val personRepository: PersonRepository) : Person
       email = personDTO.email,
       github = personDTO.github,
       linkedin = personDTO.linkedin,
-      skills = personDTO.skills
+      skills = personDTO.skills,
+      password = personDTO.password
     )
     val result = personRepository.save(person)
       ?: throw HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error saving.")

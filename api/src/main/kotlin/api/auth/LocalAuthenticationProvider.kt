@@ -5,11 +5,14 @@ import io.micronaut.http.HttpRequest
 import io.micronaut.security.authentication.AuthenticationProvider
 import io.micronaut.security.authentication.AuthenticationRequest
 import io.micronaut.security.authentication.AuthenticationResponse
+import io.micronaut.context.annotation.Requires
 import jakarta.inject.Singleton
 import org.reactivestreams.Publisher
 import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
 
 @Singleton
+@Requires(property = "micronaut.security.authentication", value = "bearer")
 class LocalAuthenticationProvider(
   private val personRepository: PersonRepository
 ) : AuthenticationProvider {
@@ -21,8 +24,11 @@ class LocalAuthenticationProvider(
     val email = authenticationRequest.identity.toString()
     val password = authenticationRequest.secret.toString()
 
-    val person = personRepository.findByEmailAndPassword(email, password)
-    val response = if (person != null) {
+    val person = personRepository.findByEmail(email)
+    val response = if (person != null && person.password == password) {
+      if (person.username == null) {
+        personRepository.updateUsername(email, email)
+      }
       val attributes = mutableMapOf<String, Any>()
       attributes["email"] = person.email
       person.id?.let { attributes["id"] = it }
@@ -32,8 +38,13 @@ class LocalAuthenticationProvider(
     }
 
     return Publisher { subscriber: Subscriber<in AuthenticationResponse> ->
-      subscriber.onNext(response)
-      subscriber.onComplete()
+      subscriber.onSubscribe(object : Subscription {
+        override fun request(n: Long) {
+          subscriber.onNext(response)
+          subscriber.onComplete()
+        }
+        override fun cancel() {}
+      })
     }
   }
 }

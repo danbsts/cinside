@@ -2,6 +2,7 @@ package api.auth
 
 import api.auth.failures.AccountNotRegisteredResponse
 import api.people.dal.dao.PersonRepository
+import io.micronaut.context.annotation.Requires
 import io.micronaut.security.authentication.AuthenticationResponse
 import io.micronaut.security.oauth2.endpoint.authorization.state.State
 import io.micronaut.security.oauth2.endpoint.token.response.OauthAuthenticationMapper
@@ -16,6 +17,7 @@ import java.util.Collections
 import java.util.function.Consumer
 
 @Singleton
+@Requires(property = "micronaut.security.authentication", value = "idtoken")
 @Named("google")
 class GoogleOpenIdAuthenticationMapper(
   private val personRepository: PersonRepository,
