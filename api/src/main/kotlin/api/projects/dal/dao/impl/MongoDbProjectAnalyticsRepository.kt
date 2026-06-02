@@ -21,21 +21,21 @@ class MongoDbProjectAnalyticsRepository(
     get() = mongoClient.getDatabase(mongoConfig.name)
       .getCollection(mongoConfig.projectAnalyticsCollection, ProjectAnalytics::class.java)
 
-  override fun save(projectAnalytics: ProjectAnalytics): ObjectId? {
+  override fun save(projectAnalytics: ProjectAnalytics): String? {
     val result = collection.insertOne(projectAnalytics)
     if (!result.wasAcknowledged()) {
       return null
     }
-    return result.insertedId?.let { it.asObjectId().value }
+    return result.insertedId?.let { it.asObjectId().value.toString() }
   }
 
-  override fun findByProjectId(projectId: ObjectId): ProjectAnalytics? {
+  override fun findByProjectId(projectId: String): ProjectAnalytics? {
     val filter = Filters.eq("projectId", projectId)
     return collection.find(filter).first()
   }
 
-  override fun addProjectPreview(id: ObjectId, username: String): Long {
-    val filter = Filters.eq("_id", id)
+  override fun addProjectPreview(id: String, username: String): Long {
+    val filter = Filters.eq("_id", ObjectId(id))
     val update = Updates.push("projectPreviews", ProjectPreview(username = username))
     val result = collection.updateOne(filter, update)
     return result.modifiedCount

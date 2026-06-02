@@ -15,7 +15,7 @@ class ProjectAnalyticsServiceImpl(
 ) : ProjectAnalyticsService {
 
   override fun addPreviewToProject(projectId: ObjectId) {
-    val projectAnalytics = findOrSaveProjectAnalytics(projectId)
+    val projectAnalytics = findOrSaveProjectAnalytics(projectId.toString())
 
     val username = customAuthentication.getUserName()
     val lastUserPreview = projectAnalytics.projectPreviews
@@ -27,7 +27,7 @@ class ProjectAnalyticsServiceImpl(
     }
   }
 
-  private fun findOrSaveProjectAnalytics(projectId: ObjectId): ProjectAnalytics {
+  private fun findOrSaveProjectAnalytics(projectId: String): ProjectAnalytics {
     val projectAnalytics = projectAnalyticsRepository.findByProjectId(projectId)
       ?: ProjectAnalytics(projectId = projectId).also {
         it.id = projectAnalyticsRepository.save(it)
