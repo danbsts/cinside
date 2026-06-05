@@ -63,3 +63,16 @@ description: Backend development conventions for the Kotlin API with MongoDB as 
 
 - When testing the API, it references two different docker compose files to define if it's a production or dev environment
 - The different docker compose should load different configuration files that will help the apps be configured properly
+
+## Framework
+
+The `api/` module is a Kotlin service built on the Micronaut framework. This note records the versions in use and the conventions that follow directly from them. These are important to look for because it might affect which plugins are available, and how to use them.
+
+## Versions
+
+- Kotlin 1.6.21 (JVM target), with the `kotlin-kapt` and `kotlin-allopen` Gradle plugins
+- Micronaut 3.4.x (`io.micronaut.application` plugin 3.4.1)
+- Java 11 has been used for development
+- Build Gradle, Kotlin DSL (`api/build.gradle.kts`); Shadow plugin produces the runnable jar
+- Database driver present at base MongoDB sync (`io.micronaut.mongodb:micronaut-mongo-sync`)
+- JSON Jackson (`micronaut-jackson-databind`)
